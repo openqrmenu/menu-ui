@@ -4,6 +4,7 @@ import { createStore } from 'vuex'
 const store = createStore({
   state () {
     return {
+      isloggedin: false,
       menus: [
         {
             id: 0,
@@ -40,6 +41,10 @@ const store = createStore({
     }
   },
   mutations: {
+    setLoggedIn(state, payload)
+    {
+        state.isloggedin = payload
+    },
     addMenu(state, payload)
     {
         state.menus.push(payload)
@@ -60,7 +65,11 @@ const store = createStore({
     getMenu(state)
     {
         return state.menus
+    },
+    getLoggedIn(state) {
+      return state.isloggedin
     }
+    
 
   }
 })

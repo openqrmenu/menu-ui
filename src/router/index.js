@@ -2,13 +2,27 @@ import * as VueRouter from 'vue-router';
 import DashboardView from '../views/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
 import MenuView from '../views/MenuView.vue'
+import AuthCheckView from '../views/AuthCheckView.vue'
+import { useStore } from 'vuex'
+import { isLoggedIn } from '../utils/api'; 
+
+const store = useStore()
 
 // 2. Define some routes
 // Each route should map to a component.
 // We'll talk about nested routes later.
 const routes = [
-    { path: '/', component: DashboardView },
-    { path: '/login', component: LoginView },
+    { path: '/', component: AuthCheckView, 
+      meta:  {
+         allowAnonymous: true
+        } 
+    },
+    { path: '/dashboard', component: DashboardView },
+    { path: '/login', component: LoginView, 
+      meta:  {
+        allowAnonymous: true
+      }
+    },
     { path: '/menu/:id', component: MenuView },
   ]
 
@@ -20,5 +34,20 @@ const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes, // short for `routes: routes`
   })
+
+router.beforeEach((to, from) => {
+    console.log(to);
+    if (
+      // make sure the user is authenticated
+      !to.meta.allowAnonymous && !isLoggedIn() &&
+      // ❗️ Avoid an infinite redirect
+      to.path !== '/'
+    ) {
+      // redirect the user to the login page
+      return { path: '/' }
+    }
+  })
+  
+  router.replace("/");
 
   export default router;
