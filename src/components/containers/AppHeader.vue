@@ -113,7 +113,7 @@ function onAccountLogout()
 {
   logoutUser().then(function (response) {
       // handle success
-      if (response.data.authenticated == false)
+      if (response.data.status == false)
         router.push('/');
       else
         {

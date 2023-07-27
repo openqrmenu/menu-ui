@@ -3,6 +3,7 @@ import DashboardView from '../views/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
 import MenuView from '../views/MenuView.vue'
 import AuthCheckView from '../views/AuthCheckView.vue'
+import AccountCreationView from '../views/AccountCreation.vue'
 import { useStore } from 'vuex'
 import { isLoggedIn } from '../utils/api'; 
 
@@ -19,6 +20,11 @@ const routes = [
     },
     { path: '/dashboard', component: DashboardView },
     { path: '/login', component: LoginView, 
+      meta:  {
+        allowAnonymous: true
+      }
+    },
+    { path: '/createaccount', component: AccountCreationView, 
       meta:  {
         allowAnonymous: true
       }

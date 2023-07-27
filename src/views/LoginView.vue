@@ -55,6 +55,25 @@
           </div>
         </div>
 
+        <!-- ERROR -->
+        <div v-if="onerror" class="rounded-md bg-red-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">Failed to login:</h3>
+              <div class="mt-2 text-sm text-red-700">
+                <ul role="list" class="list-disc space-y-1 pl-5">
+                  <li>{{ loginerror }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ERROR -->
         <div>
           <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
         </div>
@@ -90,7 +109,7 @@
 
     <p class="mt-10 text-center text-sm text-gray-500">
       Don't have an account?
-      <a href="#" class="font-semibold leading-6 text-gray-400 hover:text-indigo-500">Create a new free account</a>
+      <router-link href="#" class="font-semibold leading-6 text-gray-400 hover:text-indigo-500" to="/createaccount">Create a new free account</router-link>
     </p>
   </div>
 </div>
@@ -104,23 +123,26 @@ import router from '../router';
 
 const email = ref("")
 const password = ref("")
-
-
+const onerror = ref(false)
+const loginerror = ref("your login failed, please check your credentials")
 function onSignIn()
 {
+    onerror.value = false
     loginUser(email.value, password.value).then(function (response) {
       // handle success
-      if (response.data.authenticated == true)
+      if (response.data.status == true)
         router.push('/dashboard');
       else
-        {
-          console.log("Error");
-        }
-
+      {
+        onerror.value = true
+        loginerror.value = response.data.message
+      }
     })
     .catch(function (error) {
       // handle error
       console.log(error);
+      onerror.value = true
+      loginerror.value = error.response.data.message
     })
     .finally(function () {
       // always executed

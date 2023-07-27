@@ -35,7 +35,7 @@ components:  {
 onMounted(() => {
   checkAuth().then(function (response) {
     // handle success
-    if (response.data.authenticated == true)
+    if (response.data.status == true)
     {
       store.commit('setLoggedIn', true);      
       router.push('/dashboard');
