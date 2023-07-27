@@ -5,6 +5,7 @@ const store = createStore({
   state () {
     return {
       isloggedin: false,
+      isauthchecked: false,
       menus: [
         {
             id: 0,
@@ -45,6 +46,10 @@ const store = createStore({
     {
         state.isloggedin = payload
     },
+    setAuthCheck(state, payload)
+    {
+        state.isauthchecked = payload
+    },
     addMenu(state, payload)
     {
         state.menus.push(payload)
@@ -68,6 +73,9 @@ const store = createStore({
     },
     getLoggedIn(state) {
       return state.isloggedin
+    },
+    getAuthCheck(state) {
+      return state.isauthchecked
     }
     
 

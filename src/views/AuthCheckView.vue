@@ -53,6 +53,7 @@ onMounted(() => {
     console.log(error);
   })
   .finally(function () {
+    store.commit('setAuthCheck', true)
   });
 
 })

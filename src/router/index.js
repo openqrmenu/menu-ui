@@ -43,11 +43,16 @@ router.beforeEach((to, from) => {
       // ❗️ Avoid an infinite redirect
       to.path !== '/'
     ) {
-      // redirect the user to the login page
+      // redirect the user to the auth check page
       return { path: '/' }
+    }
+
+    if (to.path == '/login' && isLoggedIn())
+    {
+      return { path: '/'}
     }
   })
   
-  router.replace("/");
+//  router.replace("/");
 
   export default router;

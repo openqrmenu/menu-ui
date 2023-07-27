@@ -4,9 +4,9 @@ import  store from '../store'
 
 const REST_ENDPOINT = 'http://localhost:3000/'
 
-export async function loginUser(username, password) {
+export async function loginUser(email, password) {
   const params = new URLSearchParams();
-  params.append("username", "hello");
+  params.append("email", email);
   params.append("password", password);
   return await axios({
     url: `${REST_ENDPOINT}auth/login/password`,
@@ -31,6 +31,6 @@ export function checkAuth() {
 
 export function isLoggedIn() {
   console.log(store);
-  return store.getters.getLoggedIn;
+  return store.getters.getAuthCheck && store.getters.getLoggedIn;
 }
 
