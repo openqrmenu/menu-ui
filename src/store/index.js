@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { getMenuCards, addMenuCard } from '../utils/api'
 
 // Create a new store instance.
 const store = createStore({
@@ -6,39 +7,7 @@ const store = createStore({
     return {
       isloggedin: false,
       isauthchecked: false,
-      menus: [
-        {
-            id: 0,
-            name: "Chipotle",
-            updated: "December 23, 2023",
-            count: 5
-        },
-        {
-            id: 1,
-            name: "Asia Cafe",
-            updated: "December 23, 2023",
-            count: 5
-        },
-        {
-            id: 2,
-            name: "Salt & Pepper",
-            updated: "December 23, 2023",
-            count: 6
-        },
-        {
-            id: 3,
-            name: "New Sitara Cuisine",
-            updated: "December 23, 2023",
-            count: 8
-        },
-        {
-            id: 4,
-            name: "Shake Shack",
-            updated: "December 23, 2023",
-            count: 9
-        }
-        ]
-    
+      menus: []
     }
   },
   mutations: {
@@ -54,10 +23,14 @@ const store = createStore({
     {
         state.menus.push(payload)
     },
+    setMenuCards(state, payload)
+    {
+      state.menus = payload;
+    },
     deleteMenu(state, payload)
     {
         console.log('Delete Menu '+ payload)
-        const index = state.menus.findIndex(item => item.id === payload)
+        const index = state.menus.findIndex(item => item._id === payload)
         console.log('Found  Menu Index '+ JSON.stringify(index))
         if (index !== -1)
             state.menus.splice(index, 1)
@@ -77,7 +50,32 @@ const store = createStore({
     getAuthCheck(state) {
       return state.isauthchecked
     }
-    
+  },
+  actions: {
+    async refreshMenuCards(context) {
+      getMenuCards().then(function (response) {
+        // handle success
+        context.commit("setMenuCards", response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    },
+    async addNewMenuCard(context, payload) {
+      addMenuCard(payload).then(function (response) {
+        // handle success
+        context.commit("addMenu", response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    }
 
   }
 })

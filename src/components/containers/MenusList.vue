@@ -15,10 +15,11 @@
 
 </template>
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import MenuCard from './MenuCard.vue'
 import { useStore } from 'vuex'
 import ConfirmDialog from '../generic/ConfirmDialog.vue';
+import { deleteMenuCard } from '../../utils/api.js'
 
 const store = useStore()
 
@@ -26,6 +27,11 @@ const removeMenuDialog = ref(false)
 const currentID = ref(-1)
 
 const count = computed(() => store.state.count)
+
+onMounted(() => {
+  store.dispatch("refreshMenuCards")
+})
+
 
 function increment()
 {
@@ -39,8 +45,18 @@ const menucards = computed(() => {
 
 function onRemoveMenu()
 {
-  store.commit('deleteMenu', currentID.value)
-  removeMenuDialog.value = false;
+  deleteMenuCard(currentID.value).then(function (response) {
+        // handle success
+        store.commit('deleteMenu', currentID.value)
+        removeMenuDialog.value = false;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+  
 }
 
 function onRemoveMenuRequest(id)

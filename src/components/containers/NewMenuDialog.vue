@@ -39,7 +39,7 @@
             <div class="sm:col-span-4">
               <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Menu Name</label>
               <div class="mt-2">
-                <input v-model="menuname" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <input ref="target" v-model="menuname" type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
             </div>
 
@@ -75,22 +75,29 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useFocus } from '@vueuse/core'
 
 const emit = defineEmits(['DialogClose'])
 
 const store = useStore()
 const menuname = ref('')
 const description = ref('')
+const target = ref()
+
+const { focused } = useFocus(target, { initialValue: true })
+
+onMounted(() => {
+
+})
 
 function onSave()
 {
-    store.commit('addMenu', {
-            id: 5,
-            name: menuname,
-            updated: "Jan 23, 2023",
-            count: 9
-        });
+  store.dispatch("addNewMenuCard", {
+            name: menuname.value,
+            description: ""
+        }
+  );
     emit('DialogClose')
 }
 

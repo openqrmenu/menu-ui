@@ -43,7 +43,34 @@ export function checkAuth() {
 }
 
 export function isLoggedIn() {
-  console.log(store);
   return store.getters.getAuthCheck && store.getters.getLoggedIn;
 }
 
+export function getMenuCards() {
+    return axios.get(`${REST_ENDPOINT}menucard/get`, { withCredentials: true });
+}
+
+export async function addMenuCard(obj) {
+    const params = new URLSearchParams();
+    params.append("name", obj.name);
+    params.append("description", obj.desciption);
+    return await axios({
+      url: `${REST_ENDPOINT}menucard/add`,
+      method: "POST",
+      data: params,
+      withCredentials: true,
+    });
+}
+
+export async function deleteMenuCard(id)
+{
+    const params = new URLSearchParams();
+    params.append("id", id);
+    return await axios({
+      url: `${REST_ENDPOINT}menucard/delete`,
+      method: "POST",
+      data: params,
+      withCredentials: true,
+    });
+
+}
