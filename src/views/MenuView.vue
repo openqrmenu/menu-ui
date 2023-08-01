@@ -10,7 +10,7 @@
     <div class="min-h-full">
     
     <AppHeader></AppHeader>
-    <Menu :id="routeid"></Menu>
+    <Menu :id="routeid" :lang="lang" ></Menu>
     
     </div>
     </template>
@@ -22,6 +22,7 @@
     import { ref, computed } from 'vue';
     const route = useRoute()
     const routeid = route.params.id;
+    const lang = route.query.lang;
 
     
      components:  {
