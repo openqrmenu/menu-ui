@@ -87,10 +87,6 @@ const target = ref()
 
 const { focused } = useFocus(target, { initialValue: true })
 
-onMounted(() => {
-
-})
-
 function onSave()
 {
   store.dispatch("addNewMenuCard", {

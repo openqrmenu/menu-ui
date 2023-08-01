@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { getMenuCards, addMenuCard } from '../utils/api'
+import { getMenuCards, addMenuCard, getMenuStore } from '../utils/api'
 
 // Create a new store instance.
 const store = createStore({
@@ -7,7 +7,8 @@ const store = createStore({
     return {
       isloggedin: false,
       isauthchecked: false,
-      menus: []
+      menus: [],
+      menustore: {}
     }
   },
   mutations: {
@@ -27,6 +28,12 @@ const store = createStore({
     {
       state.menus = payload;
     },
+    setMenuCard(state, payload)
+    {
+      const index = state.menus.findIndex(item => item._id === payload.id)
+      if (index !== -1)
+        state.menus[index] = payload
+    },
     deleteMenu(state, payload)
     {
         console.log('Delete Menu '+ payload)
@@ -34,6 +41,10 @@ const store = createStore({
         console.log('Found  Menu Index '+ JSON.stringify(index))
         if (index !== -1)
             state.menus.splice(index, 1)
+    },
+    setMenuStore(state, payload)
+    {
+      state.menustore = payload;
     }
   },
   getters: {
@@ -44,11 +55,18 @@ const store = createStore({
     {
         return state.menus
     },
+    getMenuForId: (state) => (id) => 
+    {
+      return state.menus.find(item => item._id === id)
+    },
     getLoggedIn(state) {
       return state.isloggedin
     },
     getAuthCheck(state) {
       return state.isauthchecked
+    },
+    getMenuStore(state) {
+      return state.menustore;
     }
   },
   actions: {
@@ -75,7 +93,19 @@ const store = createStore({
       })
       .finally(function () {
       });
-    }
+    },
+    async getCurrentMenu(context, payload) {
+      getMenuStore(payload).then(function (response) {
+        // handle success
+        context.commit("setMenuStore", response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    },
 
   }
 })

@@ -43,7 +43,6 @@ onMounted(() => {
     else
     {
       store.commit('setLoggedIn', false);
-      console.log("Not logged in...")
       router.push('/login');
     }
 

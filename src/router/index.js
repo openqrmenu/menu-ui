@@ -42,7 +42,6 @@ const router = VueRouter.createRouter({
   })
 
 router.beforeEach((to, from) => {
-    console.log(to);
     if (
       // make sure the user is authenticated
       !to.meta.allowAnonymous && !isLoggedIn() &&

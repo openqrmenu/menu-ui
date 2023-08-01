@@ -2,7 +2,7 @@
 
   <div class="flex w-full gap-x-3 "> 
    <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-          <MenuCard @OnRemoveMenuRequestEvent="onRemoveMenuRequest" v-for="menucard in menucards" :data="menucard" :key="menucard.id"></MenuCard>
+          <MenuCard @OnRemoveMenuRequestEvent="onRemoveMenuRequest" v-for="menucard in menucards" :data="menucard" :key="menucard._id"></MenuCard>
     </ul>
 
     <ConfirmDialog 

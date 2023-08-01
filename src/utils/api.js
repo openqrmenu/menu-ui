@@ -47,7 +47,11 @@ export function isLoggedIn() {
 }
 
 export function getMenuCards() {
-    return axios.get(`${REST_ENDPOINT}menucard/get`, { withCredentials: true });
+    return axios.get(`${REST_ENDPOINT}menucard/getall`, { withCredentials: true });
+}
+
+export function getMenuStore(id) {
+    return axios.get(`${REST_ENDPOINT}menucard/get/${id}`, { withCredentials: true });
 }
 
 export async function addMenuCard(obj) {
@@ -56,6 +60,51 @@ export async function addMenuCard(obj) {
     params.append("description", obj.desciption);
     return await axios({
       url: `${REST_ENDPOINT}menucard/add`,
+      method: "POST",
+      data: params,
+      withCredentials: true,
+    });
+}
+
+export async function addMenuLanguage(id, code, name) {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    params.append("code", code);
+    params.append("name", name);
+    return await axios({
+      url: `${REST_ENDPOINT}menucard/addlanguage`,
+      method: "POST",
+      data: params,
+      withCredentials: true,
+    });
+}
+
+export async function removeMenuLanguage(id, code) {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    params.append("code", code);
+    return await axios({
+      url: `${REST_ENDPOINT}menucard/removelanguage`,
+      method: "POST",
+      data: params,
+      withCredentials: true,
+    });
+}
+
+export async function addMenuItem(object) {
+    return await axios({
+      url: `${REST_ENDPOINT}menuitem/add`,
+      method: "POST",
+      data: object,
+      withCredentials: true,
+    });
+}
+
+export async function deleteMenuItem(id) {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    return await axios({
+      url: `${REST_ENDPOINT}menuitem/delete`,
       method: "POST",
       data: params,
       withCredentials: true,

@@ -126,8 +126,6 @@ function onAccountLogout()
       console.log(error);
     })
     .finally(function () {
-      // always executed
-      console.log("Completed check");
     });
 }
 

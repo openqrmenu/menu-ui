@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { onClickOutside } from '@vueuse/core';
 import { ref } from 'vue'
 const router = useRouter()
@@ -78,7 +78,7 @@ onClickOutside(
 
 function viewMenu()
 {
-  router.push('/menu/0')
+  router.push('/menu/'+props.data._id)
 }
 
 </script>
