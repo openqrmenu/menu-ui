@@ -71,6 +71,8 @@ onMounted(() => {
 const otherpricing = computed(() => {
     var combined = "";
     var otherprice;
+    if (props.data.otherprice === undefined)
+        return combined;
     for (otherprice of props.data.otherprice)
     {
         combined = combined + " " + otherprice.description + " : "+ props.data.currencysymbol + otherprice.price
