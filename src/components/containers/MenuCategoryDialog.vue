@@ -39,8 +39,12 @@
                                 <!-- LANG-->
                                 <div>
                                     <label id="listbox-label"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Switch Language</label>
-                                    <LangDropDown :menucard="props.menucard"></LangDropDown>
+                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for Language</label>
+                                        <span class="flex items-center">
+                                            <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+                                            <span class="ml-3 block truncate">{{  currLanguage }}</span>
+                                        </span>
+
                                 </div>
 
                                 <!-- LANG-->
@@ -82,14 +86,16 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
-import { addMenuItem } from '../../utils/api.js'
+import { addMenuItem, updateMenuItem } from '../../utils/api.js'
+import { getLanguageName } from '../../utils/lang';
+import { _  } from 'lodash';
 
 const emit = defineEmits(['DialogClose'])
 const store = useStore()
-const categoryname = ref('')
+let categoryname = ref('')
 const target = ref()
 
 const { focused } = useFocus(target, { initialValue: true })
@@ -100,33 +106,101 @@ const props = defineProps(
             type: Object,
             default: (() => { })
         },
-        
+        lang: {
+            type: String,
+            default:""
+            },
+        edit: {
+            type: Boolean,
+            default: false
+        },
+        category: {
+            type: Object,
+            default: (() => { })
+        }
     })
 
 function onSave() {
-    const category = {
-        menucardid: props.menucard._id,
-        type: "category",
-        parentid: "",
-        price: 0,
-        details: [{ language: "en", name: categoryname.value, description: "" }]
-    };
+    if (!props.edit) {
+        const category = {
+            menucardid: props.menucard._id,
+            type: "category",
+            parentid: "",
+            price: 0,
+            details: [{ language: props.lang, name: categoryname.value, description: "" }]
+        };
 
 
-    addMenuItem(category).then(function (response) {
-        store.dispatch("getCurrentMenu", props.menucard._id);
-    })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
+        addMenuItem(category).then(function (response) {
+            store.dispatch("getCurrentMenu", props.menucard._id);
         })
-        .finally(function () {
-        });
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+            });
+    }
+    else {
+        const category = setName(categoryname.value);
+        console.log(props.menucard.category.menucardid);
+        updateMenuItem(category).then(function (response) {
+            store.dispatch("getCurrentMenu", props.menucard.category.menucardid);
+        })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+            });
+
+    }
+
     emit('DialogClose')
 }
 
+const currLanguage = computed( () => {
+    return getLanguageName(props.lang);
+})
+
+function getName(){
+  if (!props.edit)  
+    return "";
+  const entry = props.category.category.details.find(item => 
+  { 
+    if (item.language == props.lang)
+    {
+      return true;
+    }
+    return false;
+  });
+  if (entry == undefined)
+    return props.category.category.details[0].name;
+  return entry.name;
+}
+
+function setName(name){
+  const copy = _.cloneDeep(props.category.category);
+  const entry = copy.details.find(item => 
+  { 
+    if (item.language == props.lang)
+    {
+      return true;
+    }
+    return false;
+  });
+  if (entry == undefined)
+  {
+    copy.details.push({ language: props.lang, name: name, description: "" });
+    return copy;
+  }
+  entry.name = name;
+  return copy;
+}
+
+
 onMounted(() => {
- //console.log(props.menucard);
+ categoryname.value = getName();
 })
 
 </script>

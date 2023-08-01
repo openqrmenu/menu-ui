@@ -40,7 +40,7 @@
     <!-- XX-->
 
     <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang"></MenuCategory>
-    <MenuCategoryDialog @DialogClose="onDialogClose" v-if="showCategoryDialog" :menucard="menucard">
+    <MenuCategoryDialog @DialogClose="onDialogClose" v-if="showCategoryDialog" :menucard="menucard" :lang="slang">
     </MenuCategoryDialog>
     <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
     </ManageLanguageDialog>
@@ -92,7 +92,6 @@ function onLangDropdown() {
 
 function onLangSelected(code)
 {
-  console.log("Lang Selected " + code);
   router.push({query: {lang: code}});
 }
 

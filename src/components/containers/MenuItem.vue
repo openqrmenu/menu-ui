@@ -7,7 +7,7 @@
                     <a href="#" class="hover:underline"> {{ getName }}</a>
                 </p>
                 <p class="mt-1 flex text-xs leading-5 text-gray-500">
-                    {{ data.details[0].description }}
+                    {{ getDescription }}
                 </p>
             </div>
         </div>

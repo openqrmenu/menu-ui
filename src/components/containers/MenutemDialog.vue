@@ -39,8 +39,12 @@
                                 <!-- LANG-->
                                 <div>
                                     <label id="listbox-label"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Switch Language</label>
-                                    <LangDropDown :menucard="menucard"></LangDropDown>
+                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for Language</label>
+                                        <span class="flex items-center">
+                                            <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+                                            <span class="ml-3 block truncate">{{  currLanguage }}</span>
+                                        </span>
+
                                 </div>
 
                                 <!-- LANG-->
@@ -61,7 +65,7 @@
                                         <label for="menuitemdescription"
                                             class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item Description</label>
                                         <div class="mt-2">
-                                            <input ref="target" v-model="menudescription" type="text" name="menuitemdescription"
+                                            <input  v-model="menudescription" type="text" name="menuitemdescription"
                                                 id="menuitemdescription" 
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                         </div>
@@ -71,7 +75,7 @@
                                         <label for="menuitemprice"
                                             class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item Price</label>
                                         <div class="mt-2">
-                                            <input ref="target" v-model="menuitemprice" type="text" name="menuitemprice"
+                                            <input  v-model="menuitemprice" type="text" name="menuitemprice"
                                                 id="menuitemprice" 
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                         </div>
@@ -104,10 +108,11 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
 import { addMenuItem } from '../../utils/api.js'
+import { getLanguageName } from '../../utils/lang';
 
 
 import { useRouter, useRoute } from 'vue-router'
@@ -131,6 +136,10 @@ const props = defineProps(
             type: Object,
             default: (() => { })
         },
+        lang: {
+            type: String,
+            default:""
+            }
     })
 
 
@@ -159,5 +168,10 @@ function onSave() {
         });
     emit('DialogClose')
 }
+
+const currLanguage = computed( () => {
+    return getLanguageName(props.lang);
+})
+
 
 </script>

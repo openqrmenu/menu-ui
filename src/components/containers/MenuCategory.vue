@@ -1,18 +1,20 @@
 <template>
 
 <!-- SEPARATOR -->
+<div>
 <div class="relative">
   <div class="absolute inset-0 flex items-center" aria-hidden="true">
     <div class="w-full border-t border-gray-300"></div>
   </div>
   <div class="relative flex justify-center">
     <span class="bg-white px-3 text-base font-semibold leading-6 text-gray-900">{{ getName }}</span>
+   
   </div>
 </div>
-
 <div class="relative flex gap-x-3 items-center w-full">
-  <button @click="onMenuItemDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Item</button>
-  <p class="hover: underline text-sm text-gray-500 mb-5">Edit Category</p>
+<button @click="onMenuItemDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Item</button>
+<button @click="onEditCategoryDialog" class="hover: underline text-sm text-gray-500 mb-5">Edit</button>
+</div>
 </div>
 
 
@@ -25,10 +27,14 @@
 
   <MenuItem v-for="menuitem in data.menuitems" :data="menuitem" :key="menuitem._id" :lang="lang"></MenuItem>
 
-  <MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data"></MenuItemDialog>
+  
 
 </ul>
 
+<MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang"></MenuItemDialog>
+
+<MenuCategoryDialog @DialogClose="onMenuCategoryDialogClose" v-if="showMenuCategoryDialog" :menucard="data" :edit="true" :category="data" :lang="lang">
+    </MenuCategoryDialog>
 
 <!-- SAMPLE MENU-->
 
@@ -39,12 +45,14 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import MenuItem from './MenuItem.vue'
 import MenuItemDialog from './MenutemDialog.vue'
+import MenuCategoryDialog from './MenuCategoryDialog.vue';
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
 const routeid = route.params.id;
 const store = useStore()
 const showMenuItemDialog = ref(false)
+const showMenuCategoryDialog = ref(false)
 const menucard = store.getters.getMenuForId(routeid)
 
 const props = defineProps(
@@ -79,6 +87,16 @@ function onMenuItemDialog()
 function onMenuItemDialogClose()
 {
     showMenuItemDialog.value = false;
+}
+
+function onEditCategoryDialog()
+{
+  showMenuCategoryDialog.value = true;
+}
+
+function onMenuCategoryDialogClose()
+{
+  showMenuCategoryDialog.value = false;
 }
 
 const getName = computed(() => {

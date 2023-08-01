@@ -100,6 +100,15 @@ export async function addMenuItem(object) {
     });
 }
 
+export async function updateMenuItem(object) {
+  return await axios({
+    url: `${REST_ENDPOINT}menuitem/update`,
+    method: "POST",
+    data: object,
+    withCredentials: true,
+  });
+}
+
 export async function deleteMenuItem(id) {
     const params = new URLSearchParams();
     params.append("id", id);
@@ -110,6 +119,7 @@ export async function deleteMenuItem(id) {
       withCredentials: true,
     });
 }
+
 
 export async function deleteMenuCard(id)
 {
