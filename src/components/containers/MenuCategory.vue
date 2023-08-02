@@ -44,7 +44,7 @@
 
 import { ref, computed, onMounted, watch } from 'vue';
 import MenuItem from './MenuItem.vue'
-import MenuItemDialog from './MenutemDialog.vue'
+import MenuItemDialog from './MenuItemDialog.vue'
 import MenuCategoryDialog from './MenuCategoryDialog.vue';
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'

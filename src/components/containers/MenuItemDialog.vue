@@ -111,9 +111,9 @@ import { useStore } from 'vuex'
 import { ref, onMounted, computed } from 'vue'
 import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
-import { addMenuItem } from '../../utils/api.js'
+import { addMenuItem, updateMenuItem } from '../../utils/api.js'
 import { getLanguageName } from '../../utils/lang';
-
+import { _  } from 'lodash';
 
 import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
@@ -139,15 +139,74 @@ const props = defineProps(
         lang: {
             type: String,
             default:""
-            }
+            },
+        menuitem: {
+            type: Object,
+            default: (() => { })
+        },            
+        edit: {
+            type: Boolean,
+            default: false
+        }
     })
 
 
 onMounted(() => {
-    console.log("Category" + JSON.stringify(props.menucategory));
+    console.log(props.menuitem);
+    console.log(props.menucategory);
+    const obj = getData();
+    menuitemname.value = obj.name;
+    menudescription.value = obj.description;
+    menuitemprice.value = obj.price;
 })
 
+
+function getData(){
+  if (!props.edit)  
+    return {name: "", description: "", price: "0.0"};
+
+  
+  const entry = props.menuitem.details.find(item => 
+  { 
+    if (item.language == props.lang)
+    {
+      return true;
+    }
+    return false;
+  });
+  if (entry == undefined)
+  {
+    // Return the first available one
+    return {name: props.menuitem.details[0].name, description: props.menuitem.details[0].description, price: props.menuitem.price}
+  }
+  return {name: entry.name, description: entry.description, price: props.menuitem.price};
+}
+
+function setData(name, description, price){
+  const copy = _.cloneDeep(props.menuitem);
+  const entry = copy.details.find(item => 
+  { 
+    if (item.language == props.lang)
+    {
+      return true;
+    }
+    return false;
+  });
+  if (entry == undefined)
+  {
+    copy.details.push({ language: props.lang, name: name, description: description });
+    return copy;
+  }
+  entry.name = name;
+  entry.description = description;
+  copy.price = price;
+  return copy;
+}
+
+
 function onSave() {
+    if (!props.edit) {
+
     const menuitem = {
         menucardid: menucard._id,
         type: "menuitem",
@@ -166,6 +225,20 @@ function onSave() {
         })
         .finally(function () {
         });
+    }
+    else
+    {
+        const item = setData(menuitemname.value, menudescription.value, menuitemprice.value);
+        updateMenuItem(item).then(function (response) {
+            store.dispatch("getCurrentMenu", props.menuitem.menucardid);
+        })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+            });
+    }
     emit('DialogClose')
 }
 

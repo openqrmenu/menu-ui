@@ -54,17 +54,24 @@ export function getMenuStore(id) {
     return axios.get(`${REST_ENDPOINT}menucard/get/${id}`, { withCredentials: true });
 }
 
-export async function addMenuCard(obj) {
-    const params = new URLSearchParams();
-    params.append("name", obj.name);
-    params.append("description", obj.desciption);
-    return await axios({
-      url: `${REST_ENDPOINT}menucard/add`,
-      method: "POST",
-      data: params,
-      withCredentials: true,
-    });
+export async function addMenuCard(object) {
+  return await axios({
+    url: `${REST_ENDPOINT}menucard/add`,
+    method: "POST",
+    data: object,
+    withCredentials: true,
+  });
 }
+
+export async function updateMenuCardApi(object) {
+  return await axios({
+    url: `${REST_ENDPOINT}menucard/update`,
+    method: "POST",
+    data: object,
+    withCredentials: true,
+  });
+}
+
 
 export async function addMenuLanguage(id, code, name) {
     const params = new URLSearchParams();

@@ -4,10 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import MenuView from '../views/MenuView.vue'
 import AuthCheckView from '../views/AuthCheckView.vue'
 import AccountCreationView from '../views/AccountCreation.vue'
-import { useStore } from 'vuex'
 import { isLoggedIn } from '../utils/api'; 
-
-const store = useStore()
 
 // 2. Define some routes
 // Each route should map to a component.

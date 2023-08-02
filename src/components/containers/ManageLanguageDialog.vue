@@ -123,6 +123,7 @@ import { useFocus } from '@vueuse/core'
 const emit = defineEmits(['DialogClose'])
 import { onClickOutside } from '@vueuse/core';
 import { addMenuLanguage, removeMenuLanguage } from '../../utils/api';
+import { getAllLanguages } from '../../utils/lang'
 
 
 const store = useStore()
@@ -192,25 +193,9 @@ function removeLanguage(code) {
 }
 
 
-
-const alllanguages = [
-  {
-    "code": "en",
-    "name": "English"
-  },
-  {
-    "code": "es",
-    "name": "Spanish"
-  },
-  {
-    "code": "fr",
-    "name": "French"
-  },
-]
-
 const availablelanguages = computed(() => {
   
-  let available = alllanguages.filter(x => {
+  let available = getAllLanguages().filter(x => {
     const index = localdata.value.languages.findIndex(item => item.code === x.code)
     if (index !== -1)
       return false;

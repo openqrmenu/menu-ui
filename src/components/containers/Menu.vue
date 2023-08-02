@@ -61,6 +61,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { onClickOutside } from '@vueuse/core';
 import router from '../../router';
+import { getSupportedCurrencies } from '../../utils/currency';
 const route = useRoute()
 
 const showCategoryDialog = ref(false);
@@ -126,6 +127,7 @@ watch(
 
 
 onMounted(() => {
+  
   slang.value = props.lang;
   getMenuStore(props.id).then(function (response) {
     // handle success

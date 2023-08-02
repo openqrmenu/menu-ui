@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { getMenuCards, addMenuCard, getMenuStore } from '../utils/api'
+import { getMenuCards, addMenuCard, getMenuStore, updateMenuCardApi } from '../utils/api'
 
 // Create a new store instance.
 const store = createStore({
@@ -30,15 +30,13 @@ const store = createStore({
     },
     setMenuCard(state, payload)
     {
-      const index = state.menus.findIndex(item => item._id === payload.id)
+      const index = state.menus.findIndex(item => item._id === payload._id)
       if (index !== -1)
         state.menus[index] = payload
     },
     deleteMenu(state, payload)
     {
-        console.log('Delete Menu '+ payload)
         const index = state.menus.findIndex(item => item._id === payload)
-        console.log('Found  Menu Index '+ JSON.stringify(index))
         if (index !== -1)
             state.menus.splice(index, 1)
     },
@@ -86,6 +84,19 @@ const store = createStore({
       addMenuCard(payload).then(function (response) {
         // handle success
         context.commit("addMenu", response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    },
+    async updateMenuCard(context, payload) {
+      console.log(payload);
+      updateMenuCardApi(payload).then(function (response) {
+        // handle success
+        context.commit("setMenuCard", payload);
       })
       .catch(function (error) {
         // handle error

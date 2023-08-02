@@ -19,7 +19,7 @@
         <!-- MENU LIST -->      
         
         <!-- NEW MENU DIALOG -->
-        <NewMenuDialog @DialogClose="onDialogClose" v-if="showNewMenuDialog" ></NewMenuDialog>
+        <MenuCardDialog @DialogClose="onDialogClose" v-if="showNewMenuDialog" ></MenuCardDialog>
         <!-- NEW MENU DIALOG-->
 
 
@@ -32,7 +32,7 @@
 import { ref } from 'vue';
 import MenusList from './MenusList.vue'
 import Menu from './Menu.vue'
-import NewMenuDialog from './NewMenuDialog.vue'
+import MenuCardDialog from './MenuCardDialog.vue'
 import { useStore } from 'vuex'
 
 const showNewMenuDialog = ref(false)

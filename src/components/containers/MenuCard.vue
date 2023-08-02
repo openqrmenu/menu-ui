@@ -22,7 +22,7 @@
                     To: "transform opacity-0 scale-95"
                 -->
                 <div v-if="showCardMenu" ref="modalRef" class="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-0-button" tabindex="-1">
-                  <a href="#" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem" tabindex="-1" id="options-menu-0-item-0">Edit<span class="sr-only">, Tuple</span></a>
+                  <button @click="onShowMenuCardDialog" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem" tabindex="-1" id="options-menu-0-item-0">Edit<span class="sr-only">, Tuple</span></button>
                   <button @click="$emit('OnRemoveMenuRequestEvent', data._id)" class="block px-3 py-1 text-sm leading-6 text-gray-900" role="menuitem" tabindex="-1" id="options-menu-0-item-1">Delete<span class="sr-only">, Tuple</span></button>
                 </div>
               </div>
@@ -42,16 +42,22 @@
             </dl>
           </li>
 
+          <MenuCardDialog @DialogClose="onShowMenuCardDialog" v-if="showMenuCardDialog" :edit="true" :menucard="data"></MenuCardDialog>
+
           
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
 import { onClickOutside } from '@vueuse/core';
+import MenuCardDialog from './MenuCardDialog.vue'
 import { ref } from 'vue'
 const router = useRouter()
 
 const showCardMenu = ref(false)
+const showMenuCardDialog = ref(false)
+
+const emit = defineEmits(['OnRemoveMenuRequestEvent'])
 
 const props = defineProps(
     {
@@ -64,6 +70,11 @@ const props = defineProps(
 function onShowCardMenu()
 {
   showCardMenu.value = !showCardMenu.value;
+}
+
+function onShowMenuCardDialog()
+{
+  showMenuCardDialog.value = !showMenuCardDialog.value;
 }
 
 // ... Click Handling to close the menu when clicked outside
@@ -81,8 +92,9 @@ function viewMenu()
   router.push('/menu/'+props.data._id)
 }
 
+components: {
+  MenuCardDialog
+}
+
 </script>
 
-<style lang="scss" scoped>
-
-</style>

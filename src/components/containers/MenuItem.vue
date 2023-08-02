@@ -13,7 +13,7 @@
         </div>
         <div class="flex items-center gap-x-6">
             <div class="sm:flex sm:flex-col sm:items-end">
-                <p class="text-sm leading-6 text-gray-900 whitespace-nowrap">{{ data.currencysymbol }} {{ data.price }}</p>
+                <p class="text-sm leading-6 text-gray-900 whitespace-nowrap">{{ formattedPrice }}</p>
                 <p class="mt-1 text-xs leading-5 text-gray-500 whitespace-nowrap">{{ otherpricing}}</p>
             </div>
             <div class="relative flex-none">
@@ -21,7 +21,7 @@
 
             <div v-if="showMenuItemOptions" ref="modalRef" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
-              <button class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2" tabindex="-1" to="/login" @click="">Edit</button>
+              <button class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2" tabindex="-1" to="/login" @click="onEditMenuItem">Edit</button>
               <button class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2" tabindex="-1" to="/login" @click="onDeleteMenuItem">Delete</button>
             </div>
                 <!--
@@ -44,7 +44,7 @@
         </div>
     </li>
 
-
+    <MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang" :edit="true" :menuitem="data"></MenuItemDialog>
 
     <!-- SAMPLE MENU-->
 </template>
@@ -55,9 +55,17 @@ import { ref, computed, onMounted } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import IconEllipsis from '../generic/IconEllipsis.vue';
 import { deleteMenuItem } from '../../utils/api.js'
+import MenuItemDialog from './MenuItemDialog.vue';
 
 const showMenuItemOptions = ref(false);
 const store = useStore()
+let showMenuItemDialog = ref(false)
+
+import { useRouter, useRoute } from 'vue-router'
+const route = useRoute()
+const routeid = route.params.id;
+
+const menucard = store.getters.getMenuForId(routeid)
 
 const props = defineProps(
     {
@@ -70,7 +78,6 @@ const props = defineProps(
             default: "en"
         }
     })
-const mystring = "hello world"
 
 onMounted(() => {
 
@@ -87,6 +94,11 @@ onClickOutside(
 function onMenuItemOptions()
 {
     showMenuItemOptions.value = true;
+}
+
+function onMenuItemDialogClose()
+{
+    showMenuItemDialog.value = false;
 }
 
 const getName = computed(() => {
@@ -144,6 +156,25 @@ function onDeleteMenuItem() {
          });
          showMenuItemOptions.value = false;
 }
+
+function onEditMenuItem() {
+    showMenuItemDialog.value = true;
+}
+
+const formattedPrice = computed(() =>  {
+    const curr =  Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: menucard.currency,
+    }).format(props.data.price);
+
+    return curr;
+})
+
+
+components:  {
+    MenuItemDialog
+}
+    
 
 </script>
     
