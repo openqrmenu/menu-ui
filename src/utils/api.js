@@ -54,6 +54,10 @@ export function getMenuStore(id) {
     return axios.get(`${REST_ENDPOINT}menucard/get/${id}`, { withCredentials: true });
 }
 
+export function getPublicMenuStore(id) {
+  return axios.get(`${REST_ENDPOINT}public/menucard/get/${id}`, { withCredentials: true });
+}
+
 export async function addMenuCard(object) {
   return await axios({
     url: `${REST_ENDPOINT}menucard/add`,

@@ -39,11 +39,12 @@
                                 <!-- LANG-->
                                 <div>
                                     <label id="listbox-label"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for Language</label>
-                                        <span class="flex items-center">
-                                            <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
-                                            <span class="ml-3 block truncate">{{  currLanguage }}</span>
-                                        </span>
+                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for
+                                        Language</label>
+                                    <span class="flex items-center">
+                                        <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+                                        <span class="ml-3 block truncate">{{ currLanguage }}</span>
+                                    </span>
 
                                 </div>
 
@@ -91,7 +92,7 @@ import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
 import { addMenuItem, updateMenuItem } from '../../utils/api.js'
 import { getLanguageName } from '../../utils/lang';
-import { _  } from 'lodash';
+import { _ } from 'lodash';
 
 const emit = defineEmits(['DialogClose'])
 const store = useStore()
@@ -109,8 +110,8 @@ const props = defineProps(
         },
         lang: {
             type: String,
-            default:""
-            },
+            default: ""
+        },
         edit: {
             type: Boolean,
             default: false
@@ -144,7 +145,6 @@ function onSave() {
     }
     else {
         const category = setName(categoryname.value);
-        console.log(props.menucard.category.menucardid);
         updateMenuItem(category).then(function (response) {
             store.dispatch("getCurrentMenu", props.menucard.category.menucardid);
         })
@@ -160,48 +160,43 @@ function onSave() {
     emit('DialogClose')
 }
 
-const currLanguage = computed( () => {
+const currLanguage = computed(() => {
     return getLanguageName(props.lang);
 })
 
-function getName(){
-  if (!props.edit)  
-    return "";
-  const entry = props.category.category.details.find(item => 
-  { 
-    if (item.language == props.lang)
-    {
-      return true;
-    }
-    return false;
-  });
-  if (entry == undefined)
-    return props.category.category.details[0].name;
-  return entry.name;
+function getName() {
+    if (!props.edit)
+        return "";
+    const entry = props.category.category.details.find(item => {
+        if (item.language == props.lang) {
+            return true;
+        }
+        return false;
+    });
+    if (entry == undefined)
+        return props.category.category.details[0].name;
+    return entry.name;
 }
 
-function setName(name){
-  const copy = _.cloneDeep(props.category.category);
-  const entry = copy.details.find(item => 
-  { 
-    if (item.language == props.lang)
-    {
-      return true;
+function setName(name) {
+    const copy = _.cloneDeep(props.category.category);
+    const entry = copy.details.find(item => {
+        if (item.language == props.lang) {
+            return true;
+        }
+        return false;
+    });
+    if (entry == undefined) {
+        copy.details.push({ language: props.lang, name: name, description: "" });
+        return copy;
     }
-    return false;
-  });
-  if (entry == undefined)
-  {
-    copy.details.push({ language: props.lang, name: name, description: "" });
+    entry.name = name;
     return copy;
-  }
-  entry.name = name;
-  return copy;
 }
 
 
 onMounted(() => {
- categoryname.value = getName();
+    categoryname.value = getName();
 })
 
 </script>

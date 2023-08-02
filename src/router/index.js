@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import MenuView from '../views/MenuView.vue'
 import AuthCheckView from '../views/AuthCheckView.vue'
 import AccountCreationView from '../views/AccountCreation.vue'
+import PublicMenuView from '../views/PublicMenuView.vue'
 import { isLoggedIn } from '../utils/api'; 
 
 // 2. Define some routes
@@ -27,6 +28,11 @@ const routes = [
       }
     },
     { path: '/menu/:id', component: MenuView },
+    { path: '/public/:id', component: PublicMenuView, 
+    meta:  {
+      allowAnonymous: true
+    }
+  },
   ]
 
 // 3. Create the router instance and pass the `routes` option

@@ -32,7 +32,11 @@ const store = createStore({
     {
       const index = state.menus.findIndex(item => item._id === payload._id)
       if (index !== -1)
-        state.menus[index] = payload
+        state.menus[index] = payload;
+      else
+      {
+        state.menus.push(payload);
+      }
     },
     deleteMenu(state, payload)
     {

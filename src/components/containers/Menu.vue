@@ -12,7 +12,7 @@
       <div class="flex gap-x-4">
         <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
         <div class="min-w-0 flex-auto">
-          <button @click="onNewCategoryDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Category</button>
+          <button v-if="!public" @click="onNewCategoryDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Category</button>
         </div>
       </div>
       <div class="flex items-center gap-x-6">
@@ -26,7 +26,7 @@
               <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Switch Language</label>
 
               <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
-              <button @click="onManageLanguageDialog" class="hover: underline text-sm text-gray-500 mb-5">Manage</button>
+              <button v-if="!public" @click="onManageLanguageDialog" class="hover: underline text-sm text-gray-500 mb-5">Manage</button>
 
             </div>
 
@@ -39,7 +39,7 @@
     </div>
     <!-- XX-->
 
-    <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang"></MenuCategory>
+    <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang" :public="public"></MenuCategory>
     <MenuCategoryDialog @DialogClose="onDialogClose" v-if="showCategoryDialog" :menucard="menucard" :lang="slang">
     </MenuCategoryDialog>
     <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
@@ -56,7 +56,7 @@ import MenuCategory from './MenuCategory.vue';
 import MenuCategoryDialog from './MenuCategoryDialog.vue';
 import ManageLanguageDialog from './ManageLanguageDialog.vue';
 import LangDropDown from '../generic/LangDropDown.vue'
-import { getMenuCards, addMenuCard, getMenuStore } from '../../utils/api'
+import { getMenuCards, addMenuCard, getMenuStore, getPublicMenuStore } from '../../utils/api'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { onClickOutside } from '@vueuse/core';
@@ -68,7 +68,7 @@ const showCategoryDialog = ref(false);
 const showManageLanguageDialog = ref(false);
 const store = useStore()
 const showLangDropDown = ref(false);
-const menucard = store.getters.getMenuForId(props.id);
+const menucard = ref({});
 const slang = ref('');
 
 function onNewCategoryDialog() {
@@ -114,6 +114,10 @@ const props = defineProps(
     lang: {
       type: String,
       default:"en"
+    },
+    public: {
+      type: Boolean,
+      default: false
     }
   })
 
@@ -129,9 +133,12 @@ watch(
 onMounted(() => {
   
   slang.value = props.lang;
+  if (!props.public)
+  {
   getMenuStore(props.id).then(function (response) {
     // handle success
     store.commit("setMenuStore", response.data);
+    menucard.value = store.getters.getMenuForId(props.id);
     // currentMenu.value = response.data;
   })
     .catch(function (error) {
@@ -140,6 +147,24 @@ onMounted(() => {
     })
     .finally(function () {
     });
+  }
+  else 
+  {
+    getPublicMenuStore(props.id).then(function (response) {
+    // handle success
+    store.commit("setMenuStore", response.data);
+    store.commit('setMenuCard', response.data);
+    //menucard = store.getters.getMenuForId(props.id);
+    menucard.value = response.data;
+    // currentMenu.value = response.data;
+  })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+    });
+  }
 })
 
 

@@ -12,8 +12,8 @@
   </div>
 </div>
 <div class="relative flex gap-x-3 items-center w-full">
-<button @click="onMenuItemDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Item</button>
-<button @click="onEditCategoryDialog" class="hover: underline text-sm text-gray-500 mb-5">Edit</button>
+<button @click="onMenuItemDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Add Item</button>
+<button @click="onEditCategoryDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Edit</button>
 </div>
 </div>
 
@@ -25,13 +25,13 @@
 
 <ul role="list" class="divide-y divide-gray-100">
 
-  <MenuItem v-for="menuitem in data.menuitems" :data="menuitem" :key="menuitem._id" :lang="lang"></MenuItem>
+  <MenuItem v-for="menuitem in data.menuitems" :data="menuitem" :key="menuitem._id" :lang="lang" :public="public"></MenuItem>
 
   
 
 </ul>
 
-<MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang"></MenuItemDialog>
+<MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang" ></MenuItemDialog>
 
 <MenuCategoryDialog @DialogClose="onMenuCategoryDialogClose" v-if="showMenuCategoryDialog" :menucard="data" :edit="true" :category="data" :lang="lang">
     </MenuCategoryDialog>
@@ -64,6 +64,10 @@ const props = defineProps(
     lang: {
       type: String,
       default: "en"
+    },
+    public: {
+      type: Boolean,
+      default: false
     }
   })
 

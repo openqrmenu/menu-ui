@@ -152,8 +152,7 @@ const props = defineProps(
 
 
 onMounted(() => {
-    console.log(props.menuitem);
-    console.log(props.menucategory);
+    console.log(props.lang);
     const obj = getData();
     menuitemname.value = obj.name;
     menudescription.value = obj.description;
@@ -200,6 +199,7 @@ function setData(name, description, price){
   entry.name = name;
   entry.description = description;
   copy.price = price;
+  
   return copy;
 }
 
@@ -212,7 +212,7 @@ function onSave() {
         type: "menuitem",
         parentid: props.menucategory.category._id,
         price: menuitemprice.value,
-        details: [ { language: "en", name: menuitemname.value, description: menudescription.value }]
+        details: [ { language: props.lang, name: menuitemname.value, description: menudescription.value }]
     };
 
 
