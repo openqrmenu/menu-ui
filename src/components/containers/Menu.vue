@@ -1,7 +1,10 @@
 <template>
   <header>
     <div class="mx-auto max-w-7xl pt-3">
-      <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">{{ menucard.name }} Menu</h1>
+      <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{ menucard.name }} Menu</h1>
+      <p class="text-gray-700 leading-tight tracking-tight text-transform: capitalize">{{ menucard.description }}</p>
+      <a :href="publicLink" target="_blank" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
+      <a href="" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</a>
     </div>
   </header>
 
@@ -18,8 +21,10 @@
       <div class="flex items-center gap-x-6">
         <div class="sm:flex sm:flex-col sm:items-end">
 
+          
           <div class="relative flex gap-x-3 items-center w-full">
 
+            
             <!-- DROPDOWN -->
 
             <div>
@@ -28,9 +33,12 @@
               <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
               <button v-if="!public" @click="onManageLanguageDialog" class="hover: underline text-sm text-gray-500 mb-5">Manage</button>
 
+              
+
             </div>
 
             <!-- DROPDOWN-->
+            
           </div>
 
         </div>
@@ -171,6 +179,10 @@ onMounted(() => {
 
 const currentMenu = computed(() => {
   return store.getters.getMenuStore;
+})
+
+const publicLink = computed(() => {
+  return '/#/public/' + props.id;
 })
 
 components: {

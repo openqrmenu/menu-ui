@@ -7,7 +7,7 @@
     <div class="w-full border-t border-gray-300"></div>
   </div>
   <div class="relative flex justify-center">
-    <span class="bg-white px-3 text-base font-semibold leading-6 text-gray-900">{{ getName }}</span>
+    <span class="bg-white px-3 text-base font-semibold leading-6 text-transform: capitalize  text-gray-900">{{ getName }}</span>
    
   </div>
 </div>
@@ -113,7 +113,7 @@ const getName = computed(() => {
     return false;
   });
   if (entry == undefined)
-    return ("-") + props.data.category.details[0].name + ("-");
+    return props.data.category.details[0].name + (" -");
   return entry.name;
 })
 

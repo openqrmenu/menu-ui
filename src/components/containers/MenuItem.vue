@@ -3,10 +3,10 @@
         <div class="flex gap-x-4">
             <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
             <div class="min-w-0 flex-auto">
-                <p class="text-sm font-semibold leading-6 text-gray-900">
-                    <a href="#" class="hover:underline"> {{ getName }}</a>
+                <p class="text-sm font-semibold text-transform: capitalize leading-6 text-gray-900">
+                 {{ getName }}
                 </p>
-                <p class="mt-1 flex text-xs leading-5 text-gray-500">
+                <p class="mt-1 flex text-xs text-transform: capitalize leading-5 text-gray-500">
                     {{ getDescription }}
                 </p>
             </div>
@@ -115,7 +115,7 @@ const getName = computed(() => {
     return false;
   });
   if (entry == undefined)
-    return ("-") + props.data.details[0].name + ("-");
+    return props.data.details[0].name + (" -");
   return entry.name;
 })
 
@@ -129,7 +129,7 @@ const getDescription = computed(() => {
     return false;
   });
   if (entry == undefined)
-    return ("-") + props.data.details[0].description + ("-");
+    return props.data.details[0].description + (" -");
   return entry.description;
 })
 
