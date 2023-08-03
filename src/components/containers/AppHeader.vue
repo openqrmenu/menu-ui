@@ -6,7 +6,7 @@
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
             <a href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-padding" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-padding" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
               <path d="M8 16v.01"></path>
@@ -17,7 +17,8 @@
               <path d="M16 8v.01"></path>
               <path d="M12 8v.01"></path>
               <path d="M12 16v.01"></path>
-          </svg>
+          </svg>-->
+          <h3 class="font-bold text-3xl">QR Menu</h3>
         </a>
           </div>
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
