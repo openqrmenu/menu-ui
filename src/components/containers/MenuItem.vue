@@ -3,7 +3,7 @@
         <div class="flex gap-x-4">
             <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
             <div class="min-w-0 flex-auto">
-                <p class="text-sm font-semibold text-transform: capitalize leading-6 text-gray-900">
+                <p class="font-semibold text-transform: capitalize leading-6 text-gray-900">
                  {{ getName }}
                 </p>
                 <p class="mt-1 flex text-xs text-transform: capitalize leading-5 text-gray-500">

@@ -1,8 +1,19 @@
 <template>
+  
         <li class="overflow-hidden rounded-xl border border-gray-200">
+          
             <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-              <img src="/public/rest.png" alt="Tuple" class="h-12 w-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10">
-              <div @click="viewMenu" class="text-sm font-medium leading-6 text-gray-900">{{ data.name }}</div>
+              <button @click="viewMenu"> 
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"></path>
+                  <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                  <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                  <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                </svg>
+              </button>
+              <button @click="viewMenu" class="text-sm font-medium leading-6 text-gray-900 ">{{ data.name }}</button>
               <div class="relative ml-auto">
                 <button type="button" @click="onShowCardMenu" class="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500" id="options-menu-0-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open options</span>
@@ -27,6 +38,7 @@
                 </div>
               </div>
             </div>
+          
             <dl class="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
               <div class="flex justify-between gap-x-4 py-3">
                 <dt class="text-gray-500">Updated</dt>

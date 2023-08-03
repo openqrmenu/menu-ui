@@ -1,12 +1,24 @@
 <template>
 
 <nav class="border-b border-gray-200 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
-            <a href="#" ><img class="block h-8 w-auto lg:hidden" src="/public/menu.png" alt="Your Company"></a>
-            <a href="#" ><img class="hidden h-8 w-auto lg:block" src="/public/menu.png" alt="Your Company"></a>
+            <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-padding" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+              <path d="M8 16v.01"></path>
+              <path d="M8 12v.01"></path>
+              <path d="M8 8v.01"></path>
+              <path d="M16 16v.01"></path>
+              <path d="M16 12v.01"></path>
+              <path d="M16 8v.01"></path>
+              <path d="M12 8v.01"></path>
+              <path d="M12 16v.01"></path>
+          </svg>
+        </a>
           </div>
           <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->

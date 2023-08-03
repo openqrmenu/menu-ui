@@ -1,61 +1,82 @@
 <template>
-  <header>
-    <div class="mx-auto max-w-7xl pt-3">
-      <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{ menucard.name }} Menu</h1>
-      <p class="text-gray-700 leading-tight tracking-tight text-transform: capitalize">{{ menucard.description }}</p>
-      <a :href="publicLink" target="_blank" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
-      <a href="" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</a>
-    </div>
-  </header>
+  <div class="px-5">
+    <header>
+      <div class="mx-auto mt-3 max-w-7xl pt-3">
 
-  <div class="pl-3 pr-3 w-full">
-    <!-- XX -->
-
-    <div class="flex justify-between gap-x-6 py-5">
-      <div class="flex gap-x-4">
-        <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
-        <div class="min-w-0 flex-auto">
-          <button v-if="!public" @click="onNewCategoryDialog" class="hover: underline text-sm text-gray-500 mb-5">Add Category</button>
-        </div>
-      </div>
-      <div class="flex items-center gap-x-6">
-        <div class="sm:flex sm:flex-col sm:items-end">
-
-          
-          <div class="relative flex gap-x-3 items-center w-full">
-
-            
-            <!-- DROPDOWN -->
-
-            <div>
-              <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Switch Language</label>
-
-              <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
-              <button v-if="!public" @click="onManageLanguageDialog" class="hover: underline text-sm text-gray-500 mb-5">Manage</button>
-
-              
-
-            </div>
-
-            <!-- DROPDOWN-->
-            
+        <div class="flex">
+          <div class="mr-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"></path>
+                  <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                  <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                  <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                </svg>
           </div>
+          <div class="grow 1">
+            <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{
+              menucard.name }} Menu</h1>
+            <p class="text-gray-700 leading-tight tracking-tight text-transform: capitalize">{{ menucard.description }}
+            </p>
+            <a :href="publicLink" target="_blank" v-if="!public"
+              class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
+            <a href="" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</a>
+          </div>
+          <div>
 
+            <!-- DROPDOWN -->
+            <div>
+              <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
+              <button v-if="!public" @click="onManageLanguageDialog"
+                class="hover: underline text-sm text-gray-500 mb-5">Edit Languages</button>
+            </div>
+            <!-- DROPDOWN-->
+          </div>
         </div>
-
       </div>
-    </div>
-    <!-- XX-->
+    </header>
 
-    <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang" :public="public"></MenuCategory>
-    <MenuCategoryDialog @DialogClose="onDialogClose" v-if="showCategoryDialog" :menucard="menucard" :lang="slang">
-    </MenuCategoryDialog>
-    <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
-    </ManageLanguageDialog>
-    <!-- SAMPLE MENU-->
+    <div class="mx-auto max-w-7xl">
+      <!-- XX -->
+      <div class="flex justify-between gap-x-6 py-3">
+        <div class="flex gap-x-4">
+          <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
+          <div class="min-w-0 flex-auto">
+            <button v-if="!public" @click="onNewCategoryDialog"
+              class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
+              Category</button>
+          </div>
+        </div>
+        <div class="flex items-center gap-x-6">
+          <div class="sm:flex sm:flex-col sm:items-end">
+            <div class="relative flex gap-x-3 items-center w-full">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- XX-->
+
+      <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang" :public="public"></MenuCategory>
+
+      <!-- EMPTY STATE -->
+      <button v-if="empty" @click="onNewCategoryDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 ">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5" stroke="currentColor" class="mx-auto h-12 w-12 text-gray-400">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+        <span class="mt-0 block text-sm font-semibold text-gray-900">No Categories, Add a new category</span>
+      </button>
+      <!-- EMPTY STATE -->
+
+
+      <!-- DIALOGS -->
+      <MenuCategoryDialog @DialogClose="onDialogClose" v-if="showCategoryDialog" :menucard="menucard" :lang="slang">
+      </MenuCategoryDialog>
+      <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
+      </ManageLanguageDialog>
+      
 
   </div>
-</template>
+</div></template>
     
 <script setup>
 
@@ -183,6 +204,20 @@ const currentMenu = computed(() => {
 
 const publicLink = computed(() => {
   return '/#/public/' + props.id;
+})
+
+
+const empty = computed(() => {
+    if (currentMenu.value === undefined)
+      return false;
+
+    if (currentMenu.value.items === undefined)
+      return true;
+
+    if (currentMenu.value.items.length == 0)
+      return true;
+
+    return false;
 })
 
 components: {
