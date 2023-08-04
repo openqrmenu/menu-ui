@@ -20,7 +20,7 @@
             </p>
             <a :href="publicLink" target="_blank" v-if="!public"
               class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
-            <a href="" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</a>
+            <button @click="onQRCodeDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</button>
           </div>
           <div>
 
@@ -56,7 +56,22 @@
       </div>
       <!-- XX-->
 
-      <MenuCategory v-for="menuitem in currentMenu.items" :data="menuitem" :lang="slang" :public="public"></MenuCategory>
+      <draggable 
+  v-model="currentMenu.items" 
+  :disabled="public"
+  class="list-group"
+  @start="dragging = true"
+  @end="dragging = false"
+  ghost-class="ghost"
+  item-key="_id">
+  <template #item="{element, index}">
+    <div class="list-group-item" :class="{ 'not-draggable': false }">
+      <MenuCategory :data="element" :lang="slang" :public="public"></MenuCategory>
+    </div>
+   </template>
+</draggable>
+
+      
 
       <!-- EMPTY STATE -->
       <button v-if="empty" @click="onNewCategoryDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 ">
@@ -73,6 +88,7 @@
       </MenuCategoryDialog>
       <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
       </ManageLanguageDialog>
+      <QRCodeDialog @DialogClose="onQRCodeDialog" v-if="showQRCodeDialog" :url="publicLink"> </QRCodeDialog>      
       
 
   </div>
@@ -84,6 +100,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import MenuCategory from './MenuCategory.vue';
 import MenuCategoryDialog from './MenuCategoryDialog.vue';
 import ManageLanguageDialog from './ManageLanguageDialog.vue';
+import QRCodeDialog from './QRCodeDialog.vue';
 import LangDropDown from '../generic/LangDropDown.vue'
 import { getMenuCards, addMenuCard, getMenuStore, getPublicMenuStore } from '../../utils/api'
 import { useRouter, useRoute } from 'vue-router'
@@ -95,13 +112,24 @@ const route = useRoute()
 
 const showCategoryDialog = ref(false);
 const showManageLanguageDialog = ref(false);
+const showQRCodeDialog = ref(false)
 const store = useStore()
 const showLangDropDown = ref(false);
 const menucard = ref({});
 const slang = ref('');
 
+
+import draggable from 'vuedraggable'
+
+let dragging = false
+
+
 function onNewCategoryDialog() {
   showCategoryDialog.value = true
+}
+
+function onQRCodeDialog() {
+  showQRCodeDialog.value = !showQRCodeDialog.value;
 }
 
 function onDialogClose() {
@@ -226,4 +254,15 @@ components: {
 
 
 </script>
+
+<style scoped>
+.ghost {
+  opacity: 0.5;
+  background: #eee;
+}
+
+.not-draggable {
+  cursor: no-drop;
+}
+</style>
     

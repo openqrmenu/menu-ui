@@ -1,6 +1,20 @@
 <template>
     <li class="flex justify-between gap-x-6 py-5">
+
+        
+
         <div class="flex gap-x-4">
+            <div class="cursor-move"  v-if="!public">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-grip-vertical draghandle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="gray" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                <path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+            </svg>
+            </div>
             <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
             <div class="min-w-0 flex-auto">
                 <p class="font-semibold text-transform: capitalize leading-6 text-gray-900">

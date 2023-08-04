@@ -19,8 +19,23 @@
   </div>
 
   <ul role="list" class="divide-y divide-gray-100">
-    <MenuItem v-for="menuitem in data.menuitems" :data="menuitem" :key="menuitem._id" :lang="lang" :public="public">
+    <draggable 
+  v-model="data.menuitems" 
+  :disabled="public"
+  class="list-group"
+  @end="onDragComplete"
+  handle=".draghandle"
+  ghost-class="ghost"
+  item-key="_id">
+  <template #item="{element, index}">
+    <div class="list-group-item" :class="{ 'not-draggable': false }">
+
+    <MenuItem  :data="element" :key="index" :lang="lang" :public="public">
     </MenuItem>
+    </div>
+   </template>
+</draggable>
+    
   </ul>
 
   <!-- EMPTY STATE -->
@@ -53,6 +68,9 @@ const store = useStore()
 const showMenuItemDialog = ref(false)
 const showMenuCategoryDialog = ref(false)
 const menucard = store.getters.getMenuForId(routeid)
+import draggable from 'vuedraggable'
+
+let dragging = false
 
 const props = defineProps(
   {
@@ -122,8 +140,42 @@ const getName = computed(() => {
   return entry.name;
 })
 
+const dragOptions = computed(() => {
+      return {
+        animation: 0,
+        group: "description",
+        disabled: props.public,
+        ghostClass: "ghost"
+      };
+    });
+
+function onDragComplete()
+{
+  console.log(props.data);
+  console.log(store.getters.getMenuStore);
+}    
+
 components:  {
-    MenuItem, MenuItemDialog
+    MenuItem, MenuItemDialog, draggable
 }
     
 </script>
+
+<style scoped>
+.ghost {
+  opacity: 0.5;
+  background: #eee;
+}
+
+.not-draggable {
+  cursor: no-drop;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+
+.no-move {
+  transition: transform 0s;
+}
+</style>
