@@ -16,6 +16,18 @@ export async function loginUser(email, password) {
   });
 }
 
+export async function loginOAuth(token) {
+  const params = new URLSearchParams();
+  params.append("token", token);
+  return await axios({
+    url: `${REST_ENDPOINT}auth/login/token`,
+    method: "POST",
+    data: params,
+    withCredentials: true,
+  });
+}
+
+
 export async function logoutUser() {
   return await axios({
     url: `${REST_ENDPOINT}auth/logout`,

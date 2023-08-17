@@ -15,6 +15,8 @@
         Item</button>
       <button @click="onEditCategoryDialog" v-if="!public"
         class="hover: underline text-sm text-gray-500 mb-5">Edit</button>
+      <button @click="onRemoveCategoryRequest" v-if="!public"
+        class="hover: underline text-sm text-gray-500 mb-5">Delete</button>
     </div>
   </div>
 
@@ -26,6 +28,7 @@
   @end="onDragComplete"
   handle=".draghandle"
   ghost-class="ghost"
+  group="menuitemgroup"
   item-key="_id">
   <template #item="{element, index}">
     <div class="list-group-item" :class="{ 'not-draggable': false }">
@@ -39,9 +42,10 @@
   </ul>
 
   <!-- EMPTY STATE -->
-  <button v-if="empty" @click="onMenuItemDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-2 mb-8 text-center hover:border-gray-400">
+  <button v-if="empty && !public" @click="onMenuItemDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-2 mb-8 text-center hover:border-gray-400">
     <span class="mt-2 block text-sm font-semibold text-gray-900">No Items, Add a new item</span>
   </button>
+  <span v-if="empty && public" class="font-semibold text-transform: capitalize leading-6 text-gray-900">No Available Items</span>
   <!-- EMPTY STATE -->
 
   <MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang">
@@ -50,6 +54,13 @@
   <MenuCategoryDialog @DialogClose="onMenuCategoryDialogClose" v-if="showMenuCategoryDialog" :menucard="data" :edit="true"
     :category="data" :lang="lang">
   </MenuCategoryDialog>
+
+  <ConfirmDialog 
+      v-if = "removeMenuCategoryDialog"
+      @OnOK="onRemoveCategory"
+      @OnCancel="onRemoveCategoryCancel"
+      title="Do you want to remove this Category?" description="Deleting this menu will irrevocably delete this category with all items contained in it. Are you sure you want to continue."></ConfirmDialog>
+
 
 
 </template>
@@ -68,9 +79,13 @@ const store = useStore()
 const showMenuItemDialog = ref(false)
 const showMenuCategoryDialog = ref(false)
 const menucard = store.getters.getMenuForId(routeid)
+import ConfirmDialog from '../generic/ConfirmDialog.vue';
 import draggable from 'vuedraggable'
+import { deleteMenuItem } from '../../utils/api.js'
 
 let dragging = false
+const removeMenuCategoryDialog = ref(false)
+
 
 const props = defineProps(
   {
@@ -118,6 +133,32 @@ function onEditCategoryDialog()
 function onMenuCategoryDialogClose()
 {
   showMenuCategoryDialog.value = false;
+}
+
+function onRemoveCategory()
+{
+  console.log(props.data.category._id);
+    deleteMenuItem(props.data.category._id).then(function (response) {
+        store.dispatch("getCurrentMenu", props.data.category.menucardid);
+    })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .finally(function () {
+         });
+         removeMenuCategoryDialog.value = false;
+
+}
+
+function onRemoveCategoryRequest()
+{
+  removeMenuCategoryDialog.value = true;
+}
+
+function onRemoveCategoryCancel()
+{
+  removeMenuCategoryDialog.value = false;
 }
 
 const empty = computed(() => {

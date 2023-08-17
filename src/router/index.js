@@ -5,6 +5,7 @@ import MenuView from '../views/MenuView.vue'
 import AuthCheckView from '../views/AuthCheckView.vue'
 import AccountCreationView from '../views/AccountCreation.vue'
 import PublicMenuView from '../views/PublicMenuView.vue'
+import OAuthLoginView from '../views/OAuthLoginView.vue'
 import { isLoggedIn } from '../utils/api'; 
 
 // 2. Define some routes
@@ -18,6 +19,11 @@ const routes = [
     },
     { path: '/dashboard', component: DashboardView },
     { path: '/login', component: LoginView, 
+      meta:  {
+        allowAnonymous: true
+      }
+    },
+    { path: '/oauthlogin', component: OAuthLoginView, 
       meta:  {
         allowAnonymous: true
       }
