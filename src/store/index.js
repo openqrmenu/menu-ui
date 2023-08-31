@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { getMenuCards, addMenuCard, getMenuStore, updateMenuCardApi } from '../utils/api'
+import { getMenuCards, addMenuCard, getMenuStore, updateMenuCardApi, updateMenuCardDnDApi } from '../utils/api'
 
 // Create a new store instance.
 const store = createStore({
@@ -99,6 +99,20 @@ const store = createStore({
     async updateMenuCard(context, payload) {
       console.log(payload);
       updateMenuCardApi(payload).then(function (response) {
+        // handle success
+        context.commit("setMenuCard", payload);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
+    },
+
+    async updateMenuCardDnD(context, payload) {
+      console.log(payload);
+      updateMenuCardDnDApi(payload).then(function (response) {
         // handle success
         context.commit("setMenuCard", payload);
       })

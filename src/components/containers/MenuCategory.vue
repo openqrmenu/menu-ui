@@ -192,8 +192,9 @@ const dragOptions = computed(() => {
 
 function onDragComplete()
 {
-  console.log(props.data);
-  console.log(store.getters.getMenuStore);
+//  console.log(props.data);
+//  console.log(store.getters.getMenuStore);
+  store.dispatch("updateMenuCardDnD", store.getters.getMenuStore);
 }    
 
 components:  {

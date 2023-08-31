@@ -88,6 +88,14 @@ export async function updateMenuCardApi(object) {
   });
 }
 
+export async function updateMenuCardDnDApi(object) {
+  return await axios({
+    url: `${REST_ENDPOINT}menucard/updatednd`,
+    method: "POST",
+    data: object,
+    withCredentials: true,
+  });
+}
 
 export async function addMenuLanguage(id, code, name) {
     const params = new URLSearchParams();

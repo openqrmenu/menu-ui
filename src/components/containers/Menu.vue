@@ -61,7 +61,7 @@
   :disabled="public"
   class="list-group"
   @start="dragging = true"
-  @end="dragging = false"
+  @end="onDragComplete"
   ghost-class="ghost"
   item-key="_id">
   <template #item="{element, index}">
@@ -151,6 +151,13 @@ function onLangDropdown() {
 function onLangSelected(code)
 {
   router.push({query: {lang: code}});
+}
+
+function onDragComplete()
+{
+  dragging = false;
+  console.log("Dragging complete...");
+  store.dispatch("updateMenuCardDnD", store.getters.getMenuStore);
 }
 
 // ... Click Handling to close the menu when clicked outside
