@@ -21,31 +21,26 @@
   </div>
 
   <ul role="list" class="divide-y divide-gray-100">
-    <draggable 
-  v-model="data.menuitems" 
-  :disabled="public"
-  class="list-group"
-  @end="onDragComplete"
-  handle=".draghandle"
-  ghost-class="ghost"
-  group="menuitemgroup"
-  item-key="_id">
-  <template #item="{element, index}">
-    <div class="list-group-item" :class="{ 'not-draggable': false }">
+    <draggable v-model="data.menuitems" :disabled="public" class="list-group" @end="onDragComplete" handle=".draghandle"
+      ghost-class="ghost" group="menuitemgroup" item-key="_id">
+      <template #item="{ element, index }">
+        <div class="list-group-item" :class="{ 'not-draggable': false }">
 
-    <MenuItem  :data="element" :key="index" :lang="lang" :public="public">
-    </MenuItem>
-    </div>
-   </template>
-</draggable>
-    
+          <MenuItem :data="element" :key="index" :lang="lang" :public="public">
+          </MenuItem>
+        </div>
+      </template>
+    </draggable>
+
   </ul>
 
   <!-- EMPTY STATE -->
-  <button v-if="empty && !public" @click="onMenuItemDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-2 mb-8 text-center hover:border-gray-400">
+  <button v-if="empty && !public" @click="onMenuItemDialog" type="button"
+    class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-2 mb-8 text-center hover:border-gray-400">
     <span class="mt-2 block text-sm font-semibold text-gray-900">No Items, Add a new item</span>
   </button>
-  <span v-if="empty && public" class="font-semibold text-transform: capitalize leading-6 text-gray-900">No Available Items</span>
+  <span v-if="empty && public" class="font-semibold text-transform: capitalize leading-6 text-gray-900">No Available
+    Items</span>
   <!-- EMPTY STATE -->
 
   <MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang">
@@ -55,14 +50,10 @@
     :category="data" :lang="lang">
   </MenuCategoryDialog>
 
-  <ConfirmDialog 
-      v-if = "removeMenuCategoryDialog"
-      @OnOK="onRemoveCategory"
-      @OnCancel="onRemoveCategoryCancel"
-      title="Do you want to remove this Category?" description="Deleting this menu will irrevocably delete this category with all items contained in it. Are you sure you want to continue."></ConfirmDialog>
-
-
-
+  <ConfirmDialog v-if="removeMenuCategoryDialog" @OnOK="onRemoveCategory" @OnCancel="onRemoveCategoryCancel"
+    title="Do you want to remove this Category?"
+    description="Deleting this menu will irrevocably delete this category with all items contained in it. Are you sure you want to continue.">
+  </ConfirmDialog>
 </template>
 
 <script setup>
@@ -104,9 +95,9 @@ const props = defineProps(
   })
 
 onMounted(() => {
- // slang.value = props.lang;
-    //console.log(props.data);
-//    menucard = store.getters.getMenuForId(props.id)
+  // slang.value = props.lang;
+  //console.log(props.data);
+  //    menucard = store.getters.getMenuForId(props.id)
 
 })
 
@@ -115,49 +106,42 @@ const currentMenu = computed(() => {
   return store.getters.getMenuStore;
 })
 
-function onMenuItemDialog()
-{
-    showMenuItemDialog.value = true
+function onMenuItemDialog() {
+  showMenuItemDialog.value = true
 }
 
-function onMenuItemDialogClose()
-{
-    showMenuItemDialog.value = false;
+function onMenuItemDialogClose() {
+  showMenuItemDialog.value = false;
 }
 
-function onEditCategoryDialog()
-{
+function onEditCategoryDialog() {
   showMenuCategoryDialog.value = true;
 }
 
-function onMenuCategoryDialogClose()
-{
+function onMenuCategoryDialogClose() {
   showMenuCategoryDialog.value = false;
 }
 
-function onRemoveCategory()
-{
+function onRemoveCategory() {
   console.log(props.data.category._id);
-    deleteMenuItem(props.data.category._id).then(function (response) {
-        store.dispatch("getCurrentMenu", props.data.category.menucardid);
+  deleteMenuItem(props.data.category._id).then(function (response) {
+    store.dispatch("getCurrentMenu", props.data.category.menucardid);
+  })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
     })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .finally(function () {
-         });
-         removeMenuCategoryDialog.value = false;
+    .finally(function () {
+    });
+  removeMenuCategoryDialog.value = false;
 
 }
 
-function onRemoveCategoryRequest()
-{
+function onRemoveCategoryRequest() {
   removeMenuCategoryDialog.value = true;
 }
 
-function onRemoveCategoryCancel()
-{
+function onRemoveCategoryCancel() {
   removeMenuCategoryDialog.value = false;
 }
 
@@ -168,10 +152,8 @@ const empty = computed(() => {
 })
 
 const getName = computed(() => {
-  const entry = props.data.category.details.find(item => 
-  { 
-    if (item.language == props.lang)
-    {
+  const entry = props.data.category.details.find(item => {
+    if (item.language == props.lang) {
       return true;
     }
     return false;
@@ -182,25 +164,24 @@ const getName = computed(() => {
 })
 
 const dragOptions = computed(() => {
-      return {
-        animation: 0,
-        group: "description",
-        disabled: props.public,
-        ghostClass: "ghost"
-      };
-    });
+  return {
+    animation: 0,
+    group: "description",
+    disabled: props.public,
+    ghostClass: "ghost"
+  };
+});
 
-function onDragComplete()
-{
-//  console.log(props.data);
-//  console.log(store.getters.getMenuStore);
+function onDragComplete() {
+  //  console.log(props.data);
+  //  console.log(store.getters.getMenuStore);
   store.dispatch("updateMenuCardDnD", store.getters.getMenuStore);
-}    
-
-components:  {
-    MenuItem, MenuItemDialog, draggable
 }
-    
+
+components: {
+  MenuItem, MenuItemDialog, draggable
+}
+
 </script>
 
 <style scoped>

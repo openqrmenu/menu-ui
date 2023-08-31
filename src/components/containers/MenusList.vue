@@ -46,40 +46,36 @@ onMounted(() => {
 })
 
 
-function increment()
-{
+function increment() {
   store.commit('increment')
 }
 
 const menucards = computed(() => {
-    
-    return store.getters.getMenu
+
+  return store.getters.getMenu
 })
 
-function onRemoveMenu()
-{
+function onRemoveMenu() {
   deleteMenuCard(currentID.value).then(function (response) {
-        // handle success
-        store.commit('deleteMenu', currentID.value)
-        removeMenuDialog.value = false;
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-      });
-  
+    // handle success
+    store.commit('deleteMenu', currentID.value)
+    removeMenuDialog.value = false;
+  })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+    });
+
 }
 
-function onRemoveMenuRequest(id)
-{
+function onRemoveMenuRequest(id) {
   currentID.value = id;
   removeMenuDialog.value = true;
 }
 
-function onRemoveMenuCancel()
-{
+function onRemoveMenuCancel() {
   currentID.value = -1;
   removeMenuDialog.value = false;
 }

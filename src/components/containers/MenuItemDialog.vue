@@ -39,11 +39,12 @@
                                 <!-- LANG-->
                                 <div>
                                     <label id="listbox-label"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for Language</label>
-                                        <span class="flex items-center">
-                                            <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
-                                            <span class="ml-3 block truncate">{{  currLanguage }}</span>
-                                        </span>
+                                        class="block text-sm font-medium leading-6 text-gray-900">Editing for
+                                        Language</label>
+                                    <span class="flex items-center">
+                                        <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+                                        <span class="ml-3 block truncate">{{ currLanguage }}</span>
+                                    </span>
 
                                 </div>
 
@@ -56,27 +57,29 @@
                                             class="block text-sm font-medium leading-6 text-gray-900">Item Name</label>
                                         <div class="mt-2">
                                             <input ref="target" v-model="menuitemname" type="text" name="menuitemname"
-                                                id="menuitemname" 
+                                                id="menuitemname"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-4">
                                         <label for="menuitemdescription"
-                                            class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item Description</label>
+                                            class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item
+                                            Description</label>
                                         <div class="mt-2">
-                                            <input  v-model="menudescription" type="text" name="menuitemdescription"
-                                                id="menuitemdescription" 
+                                            <input v-model="menudescription" type="text" name="menuitemdescription"
+                                                id="menuitemdescription"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
 
                                     <div class="sm:col-span-4">
                                         <label for="menuitemprice"
-                                            class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item Price</label>
+                                            class="block mt-3 text-sm font-medium leading-6 text-gray-900">Item
+                                            Price</label>
                                         <div class="mt-2">
-                                            <input  v-model="menuitemprice" type="text" name="menuitemprice"
-                                                id="menuitemprice" 
+                                            <input v-model="menuitemprice" type="text" name="menuitemprice"
+                                                id="menuitemprice"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                         </div>
                                     </div>
@@ -113,7 +116,7 @@ import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
 import { addMenuItem, updateMenuItem } from '../../utils/api.js'
 import { getLanguageName } from '../../utils/lang';
-import { _  } from 'lodash';
+import { _ } from 'lodash';
 
 import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
@@ -138,12 +141,12 @@ const props = defineProps(
         },
         lang: {
             type: String,
-            default:""
-            },
+            default: ""
+        },
         menuitem: {
             type: Object,
             default: (() => { })
-        },            
+        },
         edit: {
             type: Boolean,
             default: false
@@ -160,74 +163,67 @@ onMounted(() => {
 })
 
 
-function getData(){
-  if (!props.edit)  
-    return {name: "", description: "", price: "0.0"};
+function getData() {
+    if (!props.edit)
+        return { name: "", description: "", price: "0.0" };
 
-  
-  const entry = props.menuitem.details.find(item => 
-  { 
-    if (item.language == props.lang)
-    {
-      return true;
+
+    const entry = props.menuitem.details.find(item => {
+        if (item.language == props.lang) {
+            return true;
+        }
+        return false;
+    });
+    if (entry == undefined) {
+        // Return the first available one
+        return { name: props.menuitem.details[0].name, description: props.menuitem.details[0].description, price: props.menuitem.price }
     }
-    return false;
-  });
-  if (entry == undefined)
-  {
-    // Return the first available one
-    return {name: props.menuitem.details[0].name, description: props.menuitem.details[0].description, price: props.menuitem.price}
-  }
-  return {name: entry.name, description: entry.description, price: props.menuitem.price};
+    return { name: entry.name, description: entry.description, price: props.menuitem.price };
 }
 
-function setData(name, description, price){
-  const copy = _.cloneDeep(props.menuitem);
-  const entry = copy.details.find(item => 
-  { 
-    if (item.language == props.lang)
-    {
-      return true;
+function setData(name, description, price) {
+    const copy = _.cloneDeep(props.menuitem);
+    const entry = copy.details.find(item => {
+        if (item.language == props.lang) {
+            return true;
+        }
+        return false;
+    });
+    if (entry == undefined) {
+        copy.details.push({ language: props.lang, name: name, description: description });
+        return copy;
     }
-    return false;
-  });
-  if (entry == undefined)
-  {
-    copy.details.push({ language: props.lang, name: name, description: description });
+    entry.name = name;
+    entry.description = description;
+    copy.price = price;
+
     return copy;
-  }
-  entry.name = name;
-  entry.description = description;
-  copy.price = price;
-  
-  return copy;
 }
 
 
 function onSave() {
     if (!props.edit) {
 
-    const menuitem = {
-        menucardid: menucard._id,
-        type: "menuitem",
-        parentid: props.menucategory.category._id,
-        price: menuitemprice.value,
-        details: [ { language: props.lang, name: menuitemname.value, description: menudescription.value }]
-    };
+        const menuitem = {
+            menucardid: menucard._id,
+            type: "menuitem",
+            parentid: props.menucategory.category._id,
+            price: menuitemprice.value,
+            details: [{ language: props.lang, name: menuitemname.value, description: menudescription.value }]
+        };
 
 
-    addMenuItem(menuitem).then(function (response) {
-        store.dispatch("getCurrentMenu", menucard._id);
-    })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
+        addMenuItem(menuitem).then(function (response) {
+            store.dispatch("getCurrentMenu", menucard._id);
         })
-        .finally(function () {
-        });
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+            });
     }
-    else
-    {
+    else {
         const item = setData(menuitemname.value, menudescription.value, menuitemprice.value);
         updateMenuItem(item).then(function (response) {
             store.dispatch("getCurrentMenu", props.menuitem.menucardid);
@@ -242,7 +238,7 @@ function onSave() {
     emit('DialogClose')
 }
 
-const currLanguage = computed( () => {
+const currLanguage = computed(() => {
     return getLanguageName(props.lang);
 })
 

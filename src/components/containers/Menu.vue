@@ -5,13 +5,17 @@
 
         <div class="flex">
           <div class="mr-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup" width="48" height="48" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"></path>
-                  <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                  <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                  <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup" width="48" height="48"
+              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z">
+              </path>
+              <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+              <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+              <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+            </svg>
           </div>
           <div class="grow 1">
             <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{
@@ -20,7 +24,8 @@
             </p>
             <a :href="publicLink" target="_blank" v-if="!public"
               class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
-            <button @click="onQRCodeDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR Code</button>
+            <button @click="onQRCodeDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR
+              Code</button>
           </div>
           <div>
 
@@ -56,28 +61,24 @@
       </div>
       <!-- XX-->
 
-      <draggable 
-  v-model="currentMenu.items" 
-  :disabled="public"
-  class="list-group"
-  @start="dragging = true"
-  @end="onDragComplete"
-  ghost-class="ghost"
-  item-key="_id">
-  <template #item="{element, index}">
-    <div class="list-group-item" :class="{ 'not-draggable': false }">
-      <MenuCategory :data="element" :lang="slang" :public="public"></MenuCategory>
-    </div>
-   </template>
-</draggable>
+      <draggable v-model="currentMenu.items" :disabled="public" class="list-group" @start="dragging = true"
+        @end="onDragComplete" ghost-class="ghost" item-key="_id">
+        <template #item="{ element, index }">
+          <div class="list-group-item" :class="{ 'not-draggable': false }">
+            <MenuCategory :data="element" :lang="slang" :public="public"></MenuCategory>
+          </div>
+        </template>
+      </draggable>
 
-      
+
 
       <!-- EMPTY STATE -->
-      <button v-if="empty" @click="onNewCategoryDialog" type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 ">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5" stroke="currentColor" class="mx-auto h-12 w-12 text-gray-400">
+      <button v-if="empty" @click="onNewCategoryDialog" type="button"
+        class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 ">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5" stroke="currentColor"
+          class="mx-auto h-12 w-12 text-gray-400">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-      </svg>
+        </svg>
         <span class="mt-0 block text-sm font-semibold text-gray-900">No Categories, Add a new category</span>
       </button>
       <!-- EMPTY STATE -->
@@ -88,11 +89,12 @@
       </MenuCategoryDialog>
       <ManageLanguageDialog @DialogClose="onLangDialogClose" v-if="showManageLanguageDialog" :data="menucard">
       </ManageLanguageDialog>
-      <QRCodeDialog @DialogClose="onQRCodeDialog" v-if="showQRCodeDialog" :url="publicLink"> </QRCodeDialog>      
-      
+      <QRCodeDialog @DialogClose="onQRCodeDialog" v-if="showQRCodeDialog" :url="publicLink"> </QRCodeDialog>
 
+
+    </div>
   </div>
-</div></template>
+</template>
     
 <script setup>
 
@@ -148,13 +150,11 @@ function onLangDropdown() {
   showLangDropDown.value = true;
 }
 
-function onLangSelected(code)
-{
-  router.push({query: {lang: code}});
+function onLangSelected(code) {
+  router.push({ query: { lang: code } });
 }
 
-function onDragComplete()
-{
+function onDragComplete() {
   dragging = false;
   console.log("Dragging complete...");
   store.dispatch("updateMenuCardDnD", store.getters.getMenuStore);
@@ -177,7 +177,7 @@ const props = defineProps(
     },
     lang: {
       type: String,
-      default:"en"
+      default: "en"
     },
     public: {
       type: Boolean,
@@ -195,39 +195,37 @@ watch(
 
 
 onMounted(() => {
-  
+
   slang.value = props.lang;
-  if (!props.public)
-  {
-  getMenuStore(props.id).then(function (response) {
-    // handle success
-    store.commit("setMenuStore", response.data);
-    menucard.value = store.getters.getMenuForId(props.id);
-    // currentMenu.value = response.data;
-  })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+  if (!props.public) {
+    getMenuStore(props.id).then(function (response) {
+      // handle success
+      store.commit("setMenuStore", response.data);
+      menucard.value = store.getters.getMenuForId(props.id);
+      // currentMenu.value = response.data;
     })
-    .finally(function () {
-    });
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
   }
-  else 
-  {
+  else {
     getPublicMenuStore(props.id).then(function (response) {
-    // handle success
-    store.commit("setMenuStore", response.data);
-    store.commit('setMenuCard', response.data);
-    //menucard = store.getters.getMenuForId(props.id);
-    menucard.value = response.data;
-    // currentMenu.value = response.data;
-  })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+      // handle success
+      store.commit("setMenuStore", response.data);
+      store.commit('setMenuCard', response.data);
+      //menucard = store.getters.getMenuForId(props.id);
+      menucard.value = response.data;
+      // currentMenu.value = response.data;
     })
-    .finally(function () {
-    });
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
   }
 })
 
@@ -243,16 +241,16 @@ const publicLink = computed(() => {
 
 
 const empty = computed(() => {
-    if (currentMenu.value === undefined)
-      return false;
-
-    if (currentMenu.value.items === undefined)
-      return true;
-
-    if (currentMenu.value.items.length == 0)
-      return true;
-
+  if (currentMenu.value === undefined)
     return false;
+
+  if (currentMenu.value.items === undefined)
+    return true;
+
+  if (currentMenu.value.items.length == 0)
+    return true;
+
+  return false;
 })
 
 components: {
@@ -272,4 +270,3 @@ components: {
   cursor: no-drop;
 }
 </style>
-    

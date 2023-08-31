@@ -1,5 +1,5 @@
 <template>
-    <div class="py-10">
+  <div class="py-10">
     <header>
       <div class="mx-auto max-w-7xl">
         <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900">Menus</h1>
@@ -10,16 +10,18 @@
         <!-- Your content -->
 
         <div class="relative flex gap-x-3 items-center w-full py-3">
-          <button @click="onNewMenuDialog" type="button" class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add New Menu</button>
+          <button @click="onNewMenuDialog" type="button"
+            class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
+            New Menu</button>
         </div>
 
-       
+
         <!-- MENU LIST -->
-       <MenusList @onNewMenu="onNewMenuDialog"></MenusList>
-        <!-- MENU LIST -->      
-        
+        <MenusList @onNewMenu="onNewMenuDialog"></MenusList>
+        <!-- MENU LIST -->
+
         <!-- NEW MENU DIALOG -->
-        <MenuCardDialog @DialogClose="onDialogClose" v-if="showNewMenuDialog" ></MenuCardDialog>
+        <MenuCardDialog @DialogClose="onDialogClose" v-if="showNewMenuDialog"></MenuCardDialog>
         <!-- NEW MENU DIALOG-->
 
 
@@ -38,19 +40,15 @@ import { useStore } from 'vuex'
 const showNewMenuDialog = ref(false)
 const store = useStore()
 
-function onDialogClose()
-{
+function onDialogClose() {
   showNewMenuDialog.value = false;
 }
 
-function onNewMenuDialog()
-{
+function onNewMenuDialog() {
   showNewMenuDialog.value = true;
 }
-
 
 components: {
   MenusList, Menu
 }
 </script>
-

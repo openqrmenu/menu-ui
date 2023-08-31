@@ -128,7 +128,7 @@ import { useStore } from 'vuex'
 import { ref, onMounted } from 'vue'
 import { useFocus } from '@vueuse/core'
 import { getCurrencyArray } from '../../utils/currency';
-import { _  } from 'lodash';
+import { _ } from 'lodash';
 
 const emit = defineEmits(['DialogClose'])
 
@@ -195,16 +195,16 @@ function onSave() {
       name: menuname.value,
       description: description.value,
       currency: selectedCode.value,
-      languages: [ { code: "en", name: "English"}]
+      languages: [{ code: "en", name: "English" }]
     }
     );
   }
   else {
     const copy = _.cloneDeep(props.menucard);
-    copy.name =  menuname.value,
-    copy.description=  description.value,
-    copy.currency =  selectedCode.value
-    
+    copy.name = menuname.value,
+      copy.description = description.value,
+      copy.currency = selectedCode.value
+
     store.dispatch("updateMenuCard", copy);
   }
   emit('DialogClose')

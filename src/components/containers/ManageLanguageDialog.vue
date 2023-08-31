@@ -194,17 +194,17 @@ function removeLanguage(code) {
 
 
 const availablelanguages = computed(() => {
-  
+
   let available = getAllLanguages().filter(x => {
     const index = localdata.value.languages.findIndex(item => item.code === x.code)
     if (index !== -1)
       return false;
 
-    return true;  
+    return true;
   });
   return available;
 })
-   
+
 
 const { focused } = useFocus(target, { initialValue: true })
 
