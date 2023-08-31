@@ -41,8 +41,8 @@
           
             <dl class="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
               <div class="flex justify-between gap-x-4 py-3">
-                <dt class="text-gray-500">Updated</dt>
-                <dd class="text-gray-700"><time datetime="2022-12-13">{{ data.updated }}</time></dd>
+                <dt class="text-gray-500">Created</dt>
+                <dd class="text-gray-700"><time datetime="2022-12-13">{{ getDateString() }}</time></dd>
               </div>
               <div class="flex justify-between gap-x-4 py-3">
                 <dt class="text-gray-500">Items</dt>
@@ -97,6 +97,12 @@ onClickOutside(
     showCardMenu.value = false
   },
 )
+
+function getDateString()
+{
+  const dt = new Date(props.data.updated);
+  return dt.toDateString();
+}
 
 
 function viewMenu()
