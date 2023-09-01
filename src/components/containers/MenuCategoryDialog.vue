@@ -127,7 +127,7 @@ function onSave() {
         const category = {
             menucardid: props.menucard._id,
             type: "category",
-            parentid: "",
+            parentid: "507f1f77bcf86cd799439011", // Magic ID
             price: 0,
             details: [{ language: props.lang, name: categoryname.value, description: "" }]
         };
