@@ -23,7 +23,7 @@
 -->
 <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <img class="mx-auto h-10 w-auto" src="/public/menu.png" alt="Your Company">
+    <a href="/"><h2 class="mt-1 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">QR Menu</h2></a>
     <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create a new account</h2>
   </div>
 
