@@ -1,8 +1,11 @@
 import axios from 'axios'
 import  store from '../store'
 
-
-const REST_ENDPOINT = 'http://localhost:3000/'
+// In Development, we connect to backend running on a different port
+// In Production, the UI is serverd by the backend and can thus be changed
+let REST_ENDPOINT = 'http://localhost:3000/'
+if (import.meta.env.PROD)
+  REST_ENDPOINT = '/'
 
 export async function loginUser(email, password) {
   const params = new URLSearchParams();
