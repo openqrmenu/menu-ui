@@ -129,7 +129,7 @@ function getGoogleSignInUrl()
 {
   let googleURL = 'http://goqrmenudev.com:3000/auth/login/google';
   if (import.meta.env.PROD)
-    googleURL = '/';
+    googleURL = '/auth/login/google';
 
   return googleURL;
 }
