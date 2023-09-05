@@ -1,29 +1,7 @@
 <template>
-    <!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-50">
-  <body class="h-full">
-  ```
--->
 <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <img class="mx-auto h-10 w-auto" src="/public/menu.png" alt="Your Company">
+    <a href="/"><h2 class="mt-1 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">QR Menu</h2></a>
     <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
   </div>
 
@@ -45,10 +23,6 @@
         </div>
 
         <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-            <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-900">Remember me</label>
-          </div>
 
           <div class="text-sm leading-6">
             <a href="#" class="font-semibold text-gray-400 hover:text-indigo-500">Forgot password?</a>
@@ -101,8 +75,9 @@
 
     <p class="mt-10 text-center text-sm text-gray-500">
       Don't have an account?
-      <router-link href="#" class="font-semibold leading-6 text-gray-400 hover:text-indigo-500" to="/createaccount">Create a new free account</router-link>
+      <router-link href="#" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-500" to="/createaccount">Create a new free account</router-link>
     </p>
+    <p class="mt-2 text-center text-sm text-gray-500"><a href="/" class="hover:text-indigo-500">Go back to Home Page</a></p>
   </div>
 </div>
 
