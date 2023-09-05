@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import MenusList from './MenusList.vue'
 import Menu from './Menu.vue'
 import MenuCardDialog from './MenuCardDialog.vue'
@@ -51,4 +51,8 @@ function onNewMenuDialog() {
 components: {
   MenusList, Menu
 }
+
+onMounted(() => {
+  document.title = "QR Menu";
+})
 </script>

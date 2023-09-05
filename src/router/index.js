@@ -6,6 +6,7 @@ import AuthCheckView from '../views/AuthCheckView.vue'
 import AccountCreationView from '../views/AccountCreation.vue'
 import PublicMenuView from '../views/PublicMenuView.vue'
 import OAuthLoginView from '../views/OAuthLoginView.vue'
+import ResetPasswordView from '../views/ResetPasswordView.vue'
 import { isLoggedIn } from '../utils/api'; 
 
 // 2. Define some routes
@@ -35,10 +36,15 @@ const routes = [
     },
     { path: '/menu/:id', component: MenuView },
     { path: '/public/:id', component: PublicMenuView, 
-    meta:  {
-      allowAnonymous: true
-    }
-  },
+      meta:  {
+        allowAnonymous: true
+       }
+    },
+    { path: '/util/resetpw', component: ResetPasswordView, 
+      meta:  {
+        allowAnonymous: true
+       }
+    },
   ]
 
 // 3. Create the router instance and pass the `routes` option

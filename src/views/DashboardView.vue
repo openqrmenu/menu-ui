@@ -1,12 +1,4 @@
 <template>
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full">
-  <body class="h-full">
-  ```
--->
 <div class="min-h-full">
 
 <AppHeader></AppHeader>

@@ -19,6 +19,29 @@ export async function loginUser(email, password) {
   });
 }
 
+export async function resetPassword(token, password) {
+  const params = new URLSearchParams();
+  params.append("token", token);
+  params.append("password", password);
+  return await axios({
+    url: `${REST_ENDPOINT}auth/resetpassword`,
+    method: "POST",
+    data: params,
+    withCredentials: true,
+  });
+}
+
+export async function initresetPassword(email) {
+  const params = new URLSearchParams();
+  params.append("email", email);
+  return await axios({
+    url: `${REST_ENDPOINT}auth/initresetpassword`,
+    method: "POST",
+    data: params,
+    withCredentials: true,
+  });
+}
+
 export async function loginOAuth(token) {
   const params = new URLSearchParams();
   params.append("token", token);
@@ -54,10 +77,6 @@ export async function createAccount(email, password) {
   
 
 export function checkAuth() {
-  console.log(import.meta.env.MODE);
-  console.log(import.meta.env.BASE_URL);
-  console.log(import.meta.env.PROD);
-
   return axios.get(`${REST_ENDPOINT}auth/getstatus`, { withCredentials: true });
 }
 

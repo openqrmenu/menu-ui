@@ -36,7 +36,6 @@ components:  {
 
 function loginWithJWT() 
 {
-  console.log(token);
   if (token == "none")
   {
     store.commit('setLoggedIn', false);

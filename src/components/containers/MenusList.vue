@@ -1,7 +1,7 @@
 <template lang="">
 
   <div class="flex w-full gap-x-3 "> 
-   <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+   <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8 xl:gap-x-8">
           <MenuCard @OnRemoveMenuRequestEvent="onRemoveMenuRequest" v-for="menucard in menucards" :data="menucard" :key="menucard._id"></MenuCard>
     </ul>
 

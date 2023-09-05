@@ -20,22 +20,23 @@
           <div class="grow 1">
             <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{
               menucard.name }} Menu</h1>
-            <p class="text-gray-700 leading-tight tracking-tight text-transform: capitalize">{{ menucard.description }}
+            <p class="text-gray-700 leading-tight tracking-tight" style="white-space: pre-line;">{{ menucard.description }}
             </p>
-            <a :href="publicLink" target="_blank" v-if="!public"
-              class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
-            <button @click="onQRCodeDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR
-              Code</button>
-          </div>
-          <div>
 
-            <!-- DROPDOWN -->
-            <div>
-              <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
-              <button v-if="!public" @click="onManageLanguageDialog"
-                class="hover: underline text-sm text-gray-500 mb-5">Edit Languages</button>
+            <div class="grow 1">
+                <a :href="publicLink" target="_blank" v-if="!public"
+                class="hover: underline text-sm text-gray-500 mb-5 mr-4">Public Menu Link</a>
+              <button @click="onQRCodeDialog" v-if="!public" class="hover: underline text-sm text-gray-500 mb-5">Download QR
+                Code</button>
+                 <!-- DROPDOWN -->
+              <div class="max-w-xs">
+                <LangDropDown :menucard="menucard" @LangSelected="onLangSelected" :lang="lang"></LangDropDown>
+                <button v-if="!public" @click="onManageLanguageDialog"
+                  class="hover: underline text-sm text-gray-500 mb-5">Edit Languages</button>
+              </div>
+              <!-- DROPDOWN-->
+            
             </div>
-            <!-- DROPDOWN-->
           </div>
         </div>
       </div>
@@ -197,11 +198,13 @@ watch(
 onMounted(() => {
 
   slang.value = props.lang;
+  
   if (!props.public) {
     getMenuStore(props.id).then(function (response) {
       // handle success
       store.commit("setMenuStore", response.data);
       menucard.value = store.getters.getMenuForId(props.id);
+      document.title = menucard.value.name + " - QR Menu";
       // currentMenu.value = response.data;
     })
       .catch(function (error) {
@@ -218,6 +221,7 @@ onMounted(() => {
       store.commit('setMenuCard', response.data);
       //menucard = store.getters.getMenuForId(props.id);
       menucard.value = response.data;
+      document.title = menucard.value.name + " - QR Menu";;
       // currentMenu.value = response.data;
     })
       .catch(function (error) {
@@ -236,7 +240,7 @@ const currentMenu = computed(() => {
 })
 
 const publicLink = computed(() => {
-  return '/#/public/' + props.id;
+  return '/app/#/public/' + props.id;
 })
 
 
