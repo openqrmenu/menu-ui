@@ -51,6 +51,10 @@ export async function createAccount(email, password) {
   
 
 export function checkAuth() {
+  console.log(import.meta.env.MODE);
+  console.log(import.meta.env.BASE_URL);
+  console.log(import.meta.env.PROD);
+
   return axios.get(`${REST_ENDPOINT}auth/getstatus`, { withCredentials: true });
 }
 
