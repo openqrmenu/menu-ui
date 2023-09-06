@@ -1,10 +1,21 @@
-# Vue 3 + Vite
+# Open QR Menu UI
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project is the part of the OpenQRMenu service and is the UI built in Vue.js 3.
 
-## Recommended IDE Setup
+## Development
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+During Development, the UI runs off vite on port 4000.
 
-# Run the project in dev mode
-npx vite --port=4000
+`npm install`
+
+Start the service by
+`npm run dev`
+
+ Connect to https://localhost:4000 to open the UI. The UI will connect to the nodejs service at port 3000
+
+## Production
+
+The packaged UI is copied to the dist/public folder in the server and served by nodejs server
+
+To run full build
+`npm run build`
