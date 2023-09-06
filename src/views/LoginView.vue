@@ -96,6 +96,7 @@
       Don't have an account?
       <router-link href="#" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-500" to="/createaccount">Create a new free account</router-link>
     </p>
+    <p class="mt-2 text-center text-sm text-gray-500"><a href="/tos">Terms of Service</a></p>
     <p class="mt-2 text-center text-sm text-gray-500"><a href="/" class="hover:text-indigo-500">Go back to Home Page</a></p>
   </div>
 
