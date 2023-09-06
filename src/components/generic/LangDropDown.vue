@@ -4,7 +4,7 @@
       class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
       aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
       <span class="flex items-center">
-        <img :src="selectedCode + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+        <span :class="getCountryClass(selectedCode)"></span>
         <span class="ml-3 block truncate">{{ selectedLang }}</span>
       </span>
       <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -37,7 +37,7 @@
       <li @click="onLangSelected(language.code, language.name)" v-for="language in menucard.languages" class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
         id="listbox-option-0" role="option">
         <div class="flex items-center">
-          <img :src="language.code + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+          <span :class="getCountryClass(language.code)"></span>
           <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
           <span class="font-normal ml-3 block truncate">{{ language.name }}</span>
         </div>
@@ -54,6 +54,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import { useStore } from 'vuex'
+import { getCountryCode } from '../../utils/lang.js'
 
 const store = useStore()
 const showLangDropDown = ref(false);
@@ -71,6 +72,12 @@ function onLangSelected(code, name) {
   selectedLang.value = name
   selectedCode.value = code;
   emit('LangSelected', selectedCode.value);
+}
+
+function getCountryClass(code)
+{
+  const country = getCountryCode(code);
+  return  "fi fi-" + country;
 }
 
 // ... Click Handling to close the menu when clicked outside

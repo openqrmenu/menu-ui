@@ -66,8 +66,10 @@
                         class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900" id="option-0"
                         role="option" tabindex="-1">
                         <!-- Selected: "font-semibold" -->
-                        <span class="block truncate">{{ lang.name }}</span>
-
+                        <div class="flex">
+                        <p :class="getCountryClass(lang.code)"></p>
+                        <p class="ml-2 block truncate">{{ lang.name }}</p>
+                        </div>
                       </li>
 
                       <!-- More items... -->
@@ -88,7 +90,8 @@
 
                 <div v-for="language in localdata.languages" class="relative flex items-start py-4">
                   <div class="min-w-0 flex-1 text-sm leading-6">
-                    <label for="person-1" class="select-none font-medium text-gray-900">{{ language.name }} </label>
+                    <span :class="getCountryClass(language.code)"></span>
+                    <label for="person-1" class="ml-3 select-none font-medium text-gray-900">{{ language.name }} </label>
                   </div>
                   <div class="ml-3 flex h-6 items-center">
                     <button @click="removeLanguage(language.code)"
@@ -123,7 +126,7 @@ import { useFocus } from '@vueuse/core'
 const emit = defineEmits(['DialogClose'])
 import { onClickOutside } from '@vueuse/core';
 import { addMenuLanguage, removeMenuLanguage } from '../../utils/api';
-import { getAllLanguages } from '../../utils/lang'
+import { getAllLanguages, getCountryCode } from '../../utils/lang'
 
 
 const store = useStore()
@@ -147,6 +150,13 @@ onClickOutside(
     showLangList.value = false
   },
 )
+
+function getCountryClass(code)
+{
+  const country = getCountryCode(code);
+  return  "fi fi-" + country;
+}
+
 
 function showAllLangs() {
   showLangList.value = true
@@ -216,7 +226,6 @@ const props = defineProps(
     },
   })
 
-console.log(" data" + props.data);
 const localdata = ref(props.data);
 
 function onSave() {

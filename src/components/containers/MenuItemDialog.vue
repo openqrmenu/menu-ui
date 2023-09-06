@@ -42,7 +42,7 @@
                                         class="block text-sm font-medium leading-6 text-gray-900">Editing for
                                         Language</label>
                                     <span class="flex items-center">
-                                        <img :src="lang + '.png'" alt="" class="h-5 w-5 flex-shrink-0 rounded-full">
+                                        <span :class="getCountryClass(lang)"></span>
                                         <span class="ml-3 block truncate">{{ currLanguage }}</span>
                                     </span>
 
@@ -115,7 +115,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useFocus } from '@vueuse/core'
 import LangDropDown from '../generic/LangDropDown.vue';
 import { addMenuItem, updateMenuItem } from '../../utils/api.js'
-import { getLanguageName } from '../../utils/lang';
+import { getLanguageName, getCountryCode } from '../../utils/lang';
 import { _ } from 'lodash';
 
 import { useRouter, useRoute } from 'vue-router'
@@ -180,6 +180,14 @@ function getData() {
     }
     return { name: entry.name, description: entry.description, price: props.menuitem.price };
 }
+
+function getCountryClass(code)
+{
+  const country = getCountryCode(code);
+  return  "fi fi-" + country;
+}
+
+
 
 function setData(name, description, price) {
     const copy = _.cloneDeep(props.menuitem);

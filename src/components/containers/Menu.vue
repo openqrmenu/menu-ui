@@ -1,7 +1,9 @@
 <template>
   <div class="px-5">
     <header>
-      <div class="mx-auto mt-3 max-w-7xl pt-3">
+      <div class="mx-auto mt-1 max-w-7xl pt-3">
+        <router-link v-if="!public" href="#" class="text-sm text-gray-400 hover:text-gray-800" to="/login">&lt;  Dashboard</router-link>
+
 
         <div class="flex">
           <div class="mr-5">
@@ -73,7 +75,7 @@
 
 
       <!-- EMPTY STATE -->
-      <button v-if="empty" @click="onNewCategoryDialog" type="button"
+      <button v-if="empty && !public" @click="onNewCategoryDialog" type="button"
         class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" stroke-width="1.5" stroke="currentColor"
           class="mx-auto h-12 w-12 text-gray-400">
@@ -81,6 +83,7 @@
         </svg>
         <span class="mt-0 block text-sm font-semibold text-gray-900">No Categories, Add a new category</span>
       </button>
+      <span v-if="empty && public" class="mt-0 block text-sm font-semibold text-gray-900">No items in this menu</span>
       <!-- EMPTY STATE -->
 
 

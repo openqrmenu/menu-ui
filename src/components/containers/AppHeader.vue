@@ -5,7 +5,7 @@
         <div class="flex">
           <div class="flex flex-shrink-0 items-center">
             <a href="#">
-              <h3 class="font-bold text-3xl">QR Menu</h3>
+              <h3 class="font-bold text-3xl">Open QR Menu</h3>
             </a>
           </div>
        </div>

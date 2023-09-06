@@ -17,7 +17,6 @@
           <path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
         </svg>
       </div>
-      <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
       <div class="min-w-0 flex-auto">
         <p class="font-semibold text-transform: capitalize leading-6 text-gray-900">
           {{ getName }}
