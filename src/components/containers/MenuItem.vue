@@ -22,7 +22,7 @@
         <p class="font-semibold text-transform: capitalize leading-6 text-gray-900">
           {{ getName }}
         </p>
-        <p class="mt-1 flex text-xs text-transform: capitalize leading-5 text-gray-500">
+        <p class="mt-1 flex text-xs leading-5 text-gray-500">
           {{ getDescription }}
         </p>
       </div>

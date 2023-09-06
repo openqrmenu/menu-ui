@@ -46,7 +46,6 @@
       <!-- XX -->
       <div class="flex justify-between gap-x-6 py-3">
         <div class="flex gap-x-4">
-          <!-- <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/public/chick65.png" alt=""> -->
           <div class="min-w-0 flex-auto">
             <button v-if="!public" @click="onNewCategoryDialog"
               class="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
