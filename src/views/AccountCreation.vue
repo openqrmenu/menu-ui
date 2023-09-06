@@ -22,6 +22,10 @@
           </div>
         </div>
 
+        <div>
+          <p class="mt-2 text-sm text-gray-500"><a href="/tos">I agree to the Terms of Service</a></p>
+        </div>
+
         <!-- ERROR -->
         <div v-if="onerror" class="rounded-md bg-red-50 p-4">
           <div class="flex">
@@ -77,6 +81,8 @@
       Already have an account? 
       <router-link href="#" class="font-semibold leading-6 text-gray-400 hover:text-indigo-500" to="/login">Sign in</router-link>
     </p>
+    <p class="mt-2 text-center text-sm text-gray-500"><a href="/tos">Terms of Service</a></p>
+
   </div>
 </div>
 
