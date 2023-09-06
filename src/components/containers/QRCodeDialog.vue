@@ -97,7 +97,7 @@ import QrcodeVue from 'qrcode.vue'
 const showSuccess = ref(false);
 const emit = defineEmits(['DialogClose'])
 
-const url = ref('https://kaizen.ist')
+const url = ref('https://goqrmenu.com')
 
 
 components: {
@@ -113,6 +113,7 @@ const props = defineProps(
   })
 
 onMounted(() => {
+  url.value = "https://goqrmenu.com" + props.url;
 })
 
 
