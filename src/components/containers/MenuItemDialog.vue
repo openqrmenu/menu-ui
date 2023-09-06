@@ -51,7 +51,7 @@
                                 <!-- LANG-->
 
 
-                                <div class="mt-10 gap-x-6 gap-y-8">
+                                <div class="mt-1 gap-x-6 gap-y-8">
                                     <div class="sm:col-span-4">
                                         <label for="menuitemname"
                                             class="block text-sm font-medium leading-6 text-gray-900">Item Name</label>
@@ -84,7 +84,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="sm:col-span-4">
+                                        <label for="menuitemprice"
+                                            class="block mt-3 text-sm font-medium leading-6 text-gray-900">Enabled</label>
+                                        <div class="mt-2">
+                                            <Switch v-model="menuitemenabled" :class="[menuitemenabled ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
+                                                <span class="sr-only">Use setting</span>
+                                                <span aria-hidden="true" :class="[menuitemenabled ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
+                                            </Switch>
 
+                                        </div>
+
+                                    </div>
 
                                 </div>
                             </div>
@@ -117,6 +128,7 @@ import LangDropDown from '../generic/LangDropDown.vue';
 import { addMenuItem, updateMenuItem } from '../../utils/api.js'
 import { getLanguageName, getCountryCode } from '../../utils/lang';
 import { _ } from 'lodash';
+import { Switch } from '@headlessui/vue'
 
 import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
@@ -127,6 +139,7 @@ const emit = defineEmits(['DialogClose'])
 const menuitemname = ref('')
 const menudescription = ref('')
 const menuitemprice = ref('')
+const menuitemenabled = ref(true);
 const target = ref()
 
 const menucard = store.getters.getMenuForId(routeid)
@@ -155,17 +168,17 @@ const props = defineProps(
 
 
 onMounted(() => {
-    console.log(props.lang);
     const obj = getData();
     menuitemname.value = obj.name;
     menudescription.value = obj.description;
     menuitemprice.value = obj.price;
+    menuitemenabled.value = obj.enabled;
 })
 
 
 function getData() {
     if (!props.edit)
-        return { name: "", description: "", price: "0.0" };
+        return { name: "", description: "", price: "0.0", enabled: true };
 
 
     const entry = props.menuitem.details.find(item => {
@@ -176,9 +189,9 @@ function getData() {
     });
     if (entry == undefined) {
         // Return the first available one
-        return { name: props.menuitem.details[0].name, description: props.menuitem.details[0].description, price: props.menuitem.price }
+        return { name: props.menuitem.details[0].name, description: props.menuitem.details[0].description, price: props.menuitem.price, enabled: props.menuitem.enabled }
     }
-    return { name: entry.name, description: entry.description, price: props.menuitem.price };
+    return { name: entry.name, description: entry.description, price: props.menuitem.price, enabled: props.menuitem.enabled };
 }
 
 function getCountryClass(code)
@@ -189,7 +202,7 @@ function getCountryClass(code)
 
 
 
-function setData(name, description, price) {
+function setData(name, description, price, enabled) {
     const copy = _.cloneDeep(props.menuitem);
     const entry = copy.details.find(item => {
         if (item.language == props.lang) {
@@ -198,12 +211,13 @@ function setData(name, description, price) {
         return false;
     });
     if (entry == undefined) {
-        copy.details.push({ language: props.lang, name: name, description: description });
+        copy.details.push({ language: props.lang, name: name, description: description, enabled: enabled });
         return copy;
     }
     entry.name = name;
     entry.description = description;
     copy.price = price;
+    copy.enabled = enabled;
 
     return copy;
 }
@@ -217,6 +231,7 @@ function onSave() {
             type: "menuitem",
             parentid: props.menucategory.category._id,
             price: menuitemprice.value,
+            enabled: menuitemenabled.value,
             details: [{ language: props.lang, name: menuitemname.value, description: menudescription.value }]
         };
 
@@ -232,7 +247,7 @@ function onSave() {
             });
     }
     else {
-        const item = setData(menuitemname.value, menudescription.value, menuitemprice.value);
+        const item = setData(menuitemname.value, menudescription.value, menuitemprice.value, menuitemenabled.value);
         updateMenuItem(item).then(function (response) {
             store.dispatch("getCurrentMenu", props.menuitem.menucardid);
         })

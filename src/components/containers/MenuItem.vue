@@ -18,7 +18,7 @@
         </svg>
       </div>
       <div class="min-w-0 flex-auto">
-        <p class="font-semibold text-transform: capitalize leading-6 text-gray-900">
+        <p :class="[props.data.enabled ? 'font-semibold text-transform: capitalize leading-6 text-gray-900' : 'font-semibold text-transform: capitalize leading-6 text-gray-400 italic']">
           {{ getName }}
         </p>
         <p class="mt-1 flex text-xs leading-5 text-gray-500">
@@ -41,7 +41,7 @@
           <button class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2" tabindex="-1"
             to="/login" @click="onEditMenuItem">Edit</button>
           <button class="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2" tabindex="-1"
-            to="/login" @click="onDeleteMenuItem">Delete</button>
+            to="/login" @click="removeMenuItemDialog = true">Delete</button>
         </div>
         <!--
               Dropdown menu, show/hide based on menu state.
@@ -66,6 +66,11 @@
   <MenuItemDialog @DialogClose="onMenuItemDialogClose" v-if="showMenuItemDialog" :menucategory="data" :lang="lang"
     :edit="true" :menuitem="data"></MenuItemDialog>
 
+    <ConfirmDialog v-if="removeMenuItemDialog" @OnOK="onDeleteMenuItem" @OnCancel="removeMenuItemDialog = false"
+    title="Do you want to remove this Item?"
+    description="Deleting this item is irrevocable. Are you sure you want to continue.">
+  </ConfirmDialog>
+
   <!-- SAMPLE MENU-->
 </template>
     
@@ -76,10 +81,12 @@ import { onClickOutside } from '@vueuse/core';
 import IconEllipsis from '../generic/IconEllipsis.vue';
 import { deleteMenuItem } from '../../utils/api.js'
 import MenuItemDialog from './MenuItemDialog.vue';
+import ConfirmDialog from '../generic/ConfirmDialog.vue';
 
 const showMenuItemOptions = ref(false);
 const store = useStore()
 let showMenuItemDialog = ref(false)
+let removeMenuItemDialog = ref(false)
 
 import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
@@ -124,6 +131,7 @@ function onMenuItemDialogClose() {
 }
 
 const getName = computed(() => {
+  const extra = !props.data.enabled ? ' UNAVAILABLE ' : '';
   const entry = props.data.details.find(item => {
     if (item.language == props.lang) {
       return true;
@@ -131,8 +139,8 @@ const getName = computed(() => {
     return false;
   });
   if (entry == undefined)
-    return props.data.details[0].name + (" -");
-  return entry.name;
+    return props.data.details[0].name + extra + (" -");
+  return entry.name + extra;
 })
 
 const getDescription = computed(() => {
@@ -179,6 +187,8 @@ function onEditMenuItem() {
 }
 
 const formattedPrice = computed(() => {
+  if (!props.data.enabled)
+    return "NOT AVAILABLE";
   const curr = Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: menucard.currency,

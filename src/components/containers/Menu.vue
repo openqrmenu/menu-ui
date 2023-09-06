@@ -20,9 +20,8 @@
             </svg>
           </div>
           <div class="grow 1">
-            <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{
-              menucard.name }} Menu</h1>
-            <p class="text-gray-700 leading-tight tracking-tight" style="white-space: pre-line;">{{ menucard.description }}
+            <h1 class="text-3xl font-bold leading-tight tracking-tight text-transform: uppercase text-gray-900">{{ menuName }} Menu</h1>
+            <p class="text-gray-700 leading-tight tracking-tight" style="white-space: pre-line;">{{menuDesc }}
             </p>
 
             <div class="grow 1">
@@ -108,6 +107,7 @@ import ManageLanguageDialog from './ManageLanguageDialog.vue';
 import QRCodeDialog from './QRCodeDialog.vue';
 import LangDropDown from '../generic/LangDropDown.vue'
 import { getMenuCards, addMenuCard, getMenuStore, getPublicMenuStore } from '../../utils/api'
+import { decodeText } from '../../utils/html';
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { onClickOutside } from '@vueuse/core';
@@ -128,6 +128,13 @@ import draggable from 'vuedraggable'
 
 let dragging = false
 
+const menuName = computed(() => {
+  return decodeText(menucard.value.name);
+})
+
+const menuDesc = computed(() => {
+  return decodeText(menucard.value.description);
+})
 
 function onNewCategoryDialog() {
   showCategoryDialog.value = true
