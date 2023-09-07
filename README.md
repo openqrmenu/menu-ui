@@ -2,6 +2,8 @@
 
 This project is the part of the OpenQRMenu service and is the UI built in Vue.js 3.
 
+OpenQRMenu is hosted at [Go QR Menu](https://goqrmenu.com)
+
 ## Development
 
 During Development, the UI runs off vite on port 4000.
