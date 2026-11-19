@@ -51,6 +51,66 @@ export function getAllLanguages() {
           "name": "Portuguese",
           "country": "pt"
         },
+        {
+          "code": "zh",
+          "name": "Chinese (Simplified)",
+          "country": "cn"
+        },
+        {
+          "code": "zh-TW",
+          "name": "Chinese (Traditional)",
+          "country": "tw"
+        },
+        {
+          "code": "ja",
+          "name": "Japanese",
+          "country": "jp"
+        },
+        {
+          "code": "ko",
+          "name": "Korean",
+          "country": "kr"
+        },
+        {
+          "code": "ar",
+          "name": "Arabic",
+          "country": "sa"
+        },
+        {
+          "code": "hi",
+          "name": "Hindi",
+          "country": "in"
+        },
+        {
+          "code": "th",
+          "name": "Thai",
+          "country": "th"
+        },
+        {
+          "code": "vi",
+          "name": "Vietnamese",
+          "country": "vn"
+        },
+        {
+          "code": "id",
+          "name": "Indonesian",
+          "country": "id"
+        },
+        {
+          "code": "el",
+          "name": "Greek",
+          "country": "gr"
+        },
+        {
+          "code": "uk",
+          "name": "Ukrainian",
+          "country": "ua"
+        },
+        {
+          "code": "my",
+          "name": "Burmese",
+          "country": "mm"
+        },
       ];
     return alllanguages;
 
